@@ -1,0 +1,8 @@
+# sentinelapi SPEC.json --config sentinel.yaml
+base_url: http://127.0.0.1:8000
+top: 50
+rps: 20
+max_requests: 5000
+concurrency: 10
+fail_on: high
+out: sentinel_out
