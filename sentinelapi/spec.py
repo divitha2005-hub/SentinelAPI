@@ -26,6 +26,7 @@ class Endpoint:
     body_schema: dict | None = None
     responses: dict[str, dict] = field(default_factory=dict)   # status -> schema
     secured: bool = False
+    auth_params: list[tuple[str, str]] = field(default_factory=list)
     content_type: str = "json"      # json | form | multipart | text
 
     @property
@@ -36,7 +37,7 @@ class Endpoint:
 def load_spec(source: str | Path | dict) -> dict:
     if isinstance(source, dict):
         return source
-    text = Path(source).read_text()
+    text = Path(source).read_text(encoding="utf-8-sig")
     return json.loads(text) if str(source).endswith(".json") else yaml.safe_load(text)
 
 
@@ -48,6 +49,7 @@ def _resolve(spec: dict, node: Any, depth: int = 0) -> Any:
         if "$ref" in node and isinstance(node["$ref"], str) and node["$ref"].startswith("#/"):
             target: Any = spec
             for part in node["$ref"][2:].split("/"):
+                part = part.replace("~1", "/").replace("~0", "~")
                 target = target.get(part, {}) if isinstance(target, dict) else {}
             return _resolve(spec, target, depth + 1)
         out = {k: _resolve(spec, v, depth) for k, v in node.items()}
@@ -71,8 +73,40 @@ def _resolve(spec: dict, node: Any, depth: int = 0) -> Any:
     return node
 
 
+def _validate_structure(spec):
+    """Validate operation containers without interpreting user-defined field names."""
+    def security(value, where):
+        if not isinstance(value, list) or not all(isinstance(item, dict) for item in value):
+            raise ValueError(f"{where}: security must be a list of mappings")
+    def parameters(value, where):
+        if not isinstance(value, list) or not all(isinstance(item, dict) for item in value):
+            raise ValueError(f"{where}: parameters must be a list of mappings")
+    security(spec.get("security", []), "spec")
+    for path, item in spec["paths"].items():
+        if not isinstance(item, dict):
+            raise ValueError(f"path {path} must contain an operation mapping")
+        parameters(item.get("parameters", []), path)
+        for method, operation in item.items():
+            if method.lower() not in METHODS:
+                continue
+            where = f"{method.upper()} {path}"
+            if not isinstance(operation, dict):
+                raise ValueError(f"{where} must contain an operation mapping")
+            parameters(operation.get("parameters", []), where)
+            security(operation.get("security", []), where)
+            responses = operation.get("responses", {})
+            if not isinstance(responses, dict) or not all(isinstance(r, dict) for r in responses.values()):
+                raise ValueError(f"{where}: responses must be a mapping of response objects")
+            if "requestBody" in operation and not isinstance(operation["requestBody"], dict):
+                raise ValueError(f"{where}: requestBody must be a mapping")
+
+
 def parse_endpoints(spec: dict) -> list[Endpoint]:
-    global_security = bool(spec.get("security"))
+    if not isinstance(spec, dict) or not isinstance(spec.get("paths"), dict):
+        raise ValueError("OpenAPI document must contain a paths mapping")
+    _validate_structure(spec)
+    global_security = spec.get("security", [])
+    schemes = spec.get("components", {}).get("securitySchemes", spec.get("securityDefinitions", {}))
     out: list[Endpoint] = []
     for path, item in (spec.get("paths") or {}).items():
         item = _resolve(spec, item)
@@ -82,10 +116,21 @@ def parse_endpoints(spec: dict) -> list[Endpoint]:
                 continue
             ep = Endpoint(method=method.upper(), path=path,
                           secured=bool(op.get("security", global_security)))
+            security = op.get("security", global_security)
+            ep.secured = bool(security) and all(bool(requirement) for requirement in security)
+            for requirement in security:
+                for name in requirement:
+                    scheme = schemes.get(name, {})
+                    if scheme.get("type") == "apiKey":
+                        ep.auth_params.append((scheme.get("in", "header"), scheme.get("name", name)))
             consumes = op.get("consumes") or spec.get("consumes") or []
             form_props: dict = {}
+            # Operation parameters override path parameters by name and location.
+            parameters = {}
             for p in shared + op.get("parameters", []):
                 p = _resolve(spec, p)
+                parameters[(p.get("name"), p.get("in"))] = p
+            for p in parameters.values():
                 if p.get("in") == "body":                       # Swagger 2 body parameter
                     ep.body_schema = p.get("schema", {})
                     continue
@@ -115,6 +160,6 @@ def parse_endpoints(spec: dict) -> list[Endpoint]:
             for status, resp in (op.get("responses") or {}).items():
                 resp = _resolve(spec, resp)
                 media = (resp.get("content") or {}).get("application/json", {})
-                ep.responses[str(status)] = media.get("schema", {})
+                ep.responses[str(status)] = media.get("schema", resp.get("schema", {}))
             out.append(ep)
     return out

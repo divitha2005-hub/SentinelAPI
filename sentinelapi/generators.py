@@ -32,10 +32,16 @@ def boundary_values(schema: dict) -> list[Case]:
         cases += [Case("type_confusion", "maybe"), Case("type_confusion", 2)]
     elif t == "array":
         cases += [Case("boundary", []), Case("type_confusion", "scalar")]
+        if "maxItems" in schema:
+            cases.append(Case("boundary", [valid_value(schema.get("items", {}))] * (schema["maxItems"] + 1)))
+        if "items" in schema:
+            cases.append(Case("boundary", [None]))
+    elif t == "object":
+        cases += [Case("boundary", {}), Case("type_confusion", "scalar"), Case("type_confusion", None)]
     else:
         mx, mn = schema.get("maxLength"), schema.get("minLength")
         cases += [Case("boundary", ""), Case("boundary", "A" * 10000), Case("boundary", "\x00"),
-                  Case("boundary", "é💥")]
+                  Case("boundary", "Ã©ðŸ’¥")]
         if mx is not None:
             cases.append(Case("boundary", "A" * (mx + 1)))
         if mn:
@@ -75,7 +81,7 @@ def valid_value(schema: dict) -> Any:
     if t == "boolean":
         return True
     if t == "array":
-        return []
+        return [valid_value(schema.get("items", {})) for _ in range(schema.get("minItems", 0))]
     if t == "object":
         return {k: valid_value(v) for k, v in schema.get("properties", {}).items()}
     return "test"
