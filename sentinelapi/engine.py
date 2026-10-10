@@ -1,6 +1,6 @@
 """Async fuzzing engine."""
 from __future__ import annotations
-import asyncio, logging, re, time
+import asyncio, json, logging, math, re, time
 from collections import defaultdict
 from typing import Any
 
@@ -15,9 +15,14 @@ from .spec import Endpoint
 
 def _baseline(ep: Endpoint) -> dict[tuple, Any]:
     base = {(p.location, p.name): valid_value(p.schema) for p in ep.params}
-    if ep.body_schema:
-        for k, s in ep.body_schema.get("properties", {}).items():
-            base[("body", k)] = valid_value(s)
+    if ep.body_schema is not None:
+        if ep.content_type == "json" and not ep.body_schema.get("properties"):
+            base[("body", None)] = valid_value(ep.body_schema)
+        elif ep.content_type == "text":
+            base[("body", None)] = valid_value(ep.body_schema)
+        else:
+            for k, s in ep.body_schema.get("properties", {}).items():
+                base[("body", k)] = valid_value(s)
     return base
 
 
@@ -27,7 +32,7 @@ def _targets(ep: Endpoint):
     for k, s in (ep.body_schema or {}).get("properties", {}).items():
         yield ("body", k), s
     if ep.body_schema is not None and not ep.body_schema.get("properties"):
-        yield ("body", "payload"), {"type": "string"}      # free-form body: fuzz a generic field
+        yield ("body", None), ep.body_schema      # free-form body: fuzz a generic field
 
 
 def _build(ep: Endpoint, values: dict):
@@ -42,12 +47,20 @@ def _build(ep: Endpoint, values: dict):
         elif loc == "cookie":
             cookies[name] = str(v)
         elif loc == "body":
-            body = body or {}
-            body[name] = v
+            if name is None:
+                body = v
+            else:
+                if body is None:
+                    body = {}
+                body[name] = v
     return re.sub(r"\{[^}]+\}", "1", path), query, headers, cookies, body
 
 
 log = logging.getLogger("sentinelapi")
+
+
+class RequestBudgetExhausted(Exception):
+    """The configured request cap has been reached; stop sending requests."""
 
 
 class Fuzzer:
@@ -55,11 +68,18 @@ class Fuzzer:
                  transport: httpx.AsyncBaseTransport | None = None, concurrency: int = 20,
                  llm=None, top_n: int | None = None, headers: dict | None = None,
                  login: dict | None = None, rps: float = 0, max_requests: int | None = None):
+        if concurrency < 1:
+            raise ValueError("concurrency must be at least 1")
+        if not math.isfinite(rps) or rps < 0:
+            raise ValueError("rps must be a finite nonnegative number")
+        if max_requests is not None and max_requests < 0:
+            raise ValueError("max_requests must be nonnegative")
         ranked = sorted(endpoints, key=fuzz_risk_score, reverse=True)
         self.all_endpoints = endpoints
         self.endpoints = ranked[:top_n] if top_n else ranked
         self.client = httpx.AsyncClient(base_url=base_url, transport=transport, timeout=10,
                                         headers=headers or {})
+        self.credential_headers = list(headers or {})
         self.login = login          # {"url":..., "body":{...}, "token_field": "access_token"}
         self.sem = asyncio.Semaphore(concurrency)
         self.llm = llm
@@ -80,28 +100,42 @@ class Fuzzer:
                 base[(loc, name)] = self.client.headers[name]      # keep real credentials in baseline
         return base
 
-    async def _request(self, ep, values):
-        path, query, headers, cookies, body = _build(ep, values)
-        if self.max_requests and self.requests >= self.max_requests:
+    async def _reserve_request(self):
+        if self.max_requests is not None and self.requests >= self.max_requests:
             self.truncated = True
-            raise ValueError("request budget exhausted")
+            raise RequestBudgetExhausted()
         self.requests += 1                      # reserve a slot before awaiting (tasks run concurrently)
         await self.limiter.wait()
+
+    async def _request(self, ep, values, anonymous=False):
+        path, query, headers, cookies, body = _build(ep, values)
+        await self._reserve_request()
         kw: dict = {}
         if ep.body_schema is not None:
             b = body or {}
             if ep.content_type == "json":
-                kw["json"] = body if body is not None else {}
+                kw["content"] = json.dumps(body).encode("utf-8")
+                headers = {**headers, "Content-Type": "application/json"}
             elif ep.content_type == "form":
                 kw["data"] = {k: ("" if v is None else v) for k, v in b.items()}
             elif ep.content_type == "multipart":
                 kw["files"] = {k: (None, str("" if v is None else v)) for k, v in b.items()}
             else:
-                kw["content"] = str(next(iter(b.values()), ""))
+                kw["content"] = str(body if not isinstance(body, dict) else next(iter(body.values()), ""))
                 headers = {**headers, "Content-Type": "text/plain"}
         async with self.sem:
-            r = await self.client.request(ep.method, path, params=query, headers=headers,
-                                          cookies=cookies or None, **kw)
+            request = self.client.build_request(ep.method, path, params=query, headers=headers,
+                                                cookies=cookies or None, **kw)
+            if anonymous:
+                # Remove static credentials, session cookies and declared API keys.
+                for name in self.credential_headers + ["authorization", "cookie"]:
+                    request.headers.pop(name, None)
+                for loc, name in ep.auth_params:
+                    if loc == "query":
+                        request.url = request.url.copy_remove_param(name)
+                    else:
+                        request.headers.pop(name, None)
+            r = await self.client.send(request)
         self.observed[ep.key].add(r.status_code)
         return r
 
@@ -110,10 +144,20 @@ class Fuzzer:
             r = await self._request(ep, self._base(ep))
             self.baseline_len[ep.key] = len(r.text)
             self.baseline_status[ep.key] = r.status_code
-            if ep.secured and r.status_code not in (401, 403) and not self.client.headers.get("authorization"):
+        except (httpx.HTTPError, RequestBudgetExhausted):
+            pass
+
+    async def _probe_auth(self, ep):
+        if not ep.secured:
+            return
+        values = {key: value for key, value in _baseline(ep).items()
+                  if key[0] not in ("header", "cookie") and key not in ep.auth_params}
+        try:
+            response = await self._request(ep, values, anonymous=True)
+            if 200 <= response.status_code < 300:
                 self.findings.append(Finding("AUTH_NOT_ENFORCED", "high", ep.key, "-", None,
-                                             r.status_code, "spec says secured but request without credentials succeeded"))
-        except httpx.HTTPError:
+                    response.status_code, "secured endpoint accepted an independent anonymous request"))
+        except (httpx.HTTPError, RequestBudgetExhausted):
             pass
 
     async def _send(self, ep, values, target, case, schema):
@@ -122,18 +166,20 @@ class Fuzzer:
             return      # cannot be put on the wire in a header/cookie
         try:
             r = await self._request(ep, values)
-        except (UnicodeError, ValueError):
+        except (UnicodeError, ValueError, RequestBudgetExhausted):
             return
         except httpx.HTTPError as e:
             self.findings.append(Finding("CONNECTION_ERROR", "medium", ep.key, str(target[1]),
                                          case.value, 0, type(e).__name__))
             return
+        json_parsed = True
         try:
             jb = r.json()
-        except Exception:
+        except ValueError:
             jb = None
+            json_parsed = False
         self.findings += classify(ep, target[1], case, schema, r.status_code, r.text, jb,
-                                  loc=target[0], baseline_len=self.baseline_len.get(ep.key))
+                                  loc=target[0], baseline_len=self.baseline_len.get(ep.key), json_parsed=json_parsed)
 
     async def _llm_cases(self, ep, target, schema) -> list[Case]:
         if not self.llm:
@@ -146,11 +192,27 @@ class Fuzzer:
 
     async def run(self) -> list[Finding]:
         t0 = time.time()
+        try:
+            return await self._run()
+        finally:
+            self.elapsed = time.time() - t0
+            await self.client.aclose()
+
+    async def _run(self) -> list[Finding]:
         if self.login:
             from .auth import login_for_token
+            try:
+                await self._reserve_request()
+            except RequestBudgetExhausted:
+                return []
             self.client.headers.update(await login_for_token(
                 self.client, self.login["url"], self.login["body"], self.login.get("token_field", "access_token")))
         await asyncio.gather(*[self._do_baseline(ep) for ep in self.endpoints])
+        await asyncio.gather(*[self._probe_auth(ep) for ep in self.endpoints])
+        if self.max_requests is not None and self.requests >= self.max_requests:
+            self.truncated = True
+            log.warning("stopped early: --max-requests budget reached")
+            return self._dedupe(self.findings)
         jobs = []
         for ep in self.endpoints:
             for target, schema in _targets(ep):
@@ -166,8 +228,6 @@ class Fuzzer:
         await asyncio.gather(*tasks)
         if self.truncated:
             log.warning("stopped early: --max-requests budget reached")
-        self.elapsed = time.time() - t0
-        await self.client.aclose()
         return self._dedupe(self.findings)
 
     def spec_coverage(self) -> dict:

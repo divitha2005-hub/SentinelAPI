@@ -7,7 +7,9 @@ import httpx
 def parse_headers(items: list[str] | None) -> dict:
     out = {}
     for it in items or []:
-        k, _, v = it.partition(":")
+        k, separator, v = it.partition(":")
+        if not separator or not k.strip() or any(c in it for c in "\r\n"):
+            raise ValueError("headers must use Name: value syntax without newlines")
         out[k.strip()] = v.strip()
     return out
 
