@@ -142,5 +142,13 @@ Changes made: exported the actual bundled FastAPI contract as formatted JSON; do
 Validation: parsed the saved example and scanned the demo through ASGI using a 150-request cap; 8 endpoints, 107 requests, 7 findings. SQL injection, reflection and traversal findings verified. Live two-server browser flow not repeated for this documentation/example task.
 Next step: improve valid baseline generation for constrained strings and numeric schemas.
 
+### 2026-10-10 ? GitHub SARIF upload permissions
+Goal: resolve the failed branch-push CI check shown in pull request #1.
+Evidence: push run 38032937786 passed installation, pytest and demo scan on Python 3.12; upload-sarif failed with Resource not accessible by integration. Pull-request run 38033012737 completed successfully.
+Changes made: explicitly grant the test job contents: read, actions: read and security-events: write for SARIF uploads.
+Files modified: .github/workflows/ci.yml, PROJECT_STATUS.md.
+Validation: workflow YAML parsed locally and permission mapping asserted. Hosted rerun verification follows the push.
+Next step: improve valid baseline generation for constrained strings and numeric schemas.
+
 ## Current Next Step
 Improve parser fidelity for escaped local JSON pointers, operation-level parameter overrides and Swagger 2 response schemas, with focused regression tests.
