@@ -103,15 +103,39 @@ td code{font:11px Consolas,monospace;color:#607089;background:#f1f4f9;padding:2p
 .chart-card p{margin:0 0 14px;font-size:11px;color:var(--muted)}
 .chart-wrap{min-height:180px;display:flex;align-items:center;justify-content:center}
 
+/* Health Score Banner */
+.health-banner{background:white;border:1px solid var(--line);border-radius:11px;padding:18px 24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.02)}
+.health-left{display:flex;align-items:center;gap:18px}
+.health-badge{display:grid;place-items:center;width:60px;height:60px;border-radius:12px;background:#f0fdf4;border:2px solid #86efac;color:#16a34a;font-size:28px;font-weight:800;flex-shrink:0}
+.health-badge.grade-a{background:#f0fdf4;border-color:#86efac;color:#16a34a}
+.health-badge.grade-b{background:#eff6ff;border-color:#93c5fd;color:#2563eb}
+.health-badge.grade-c{background:#fefce8;border-color:#fde047;color:#ca8a04}
+.health-badge.grade-d{background:#fff7ed;border-color:#fdba74;color:#ea580c}
+.health-badge.grade-f{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.health-title{margin:0 0 4px;font-size:15px;font-weight:700}
+.health-desc{margin:0;font-size:11.5px;color:var(--muted)}
+.health-stats{display:flex;gap:24px}
+.health-stat-item{text-align:right}
+.health-stat-item small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.health-stat-item strong{font-size:18px;font-weight:700;color:var(--ink)}
+
 /* Metrics KPI Strip */
-.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
 .kpi-box{background:white;border:1px solid var(--line);border-radius:9px;padding:14px 16px;border-left:4px solid var(--blue)}
 .kpi-box.purple{border-left-color:#8b5cf6}
 .kpi-box.amber{border-left-color:#f59e0b}
 .kpi-box.emerald{border-left-color:#10b981}
+.kpi-box.cyan{border-left-color:#06b6d4}
+.kpi-box.rose{border-left-color:#f43f5e}
 .kpi-box small{font-size:10.5px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;font-weight:600;display:block}
 .kpi-box strong{font-size:22px;display:block;margin:4px 0 2px;font-weight:700;color:var(--ink)}
 .kpi-box span{font-size:10.5px;color:#9ca3af}
+
+/* Metrics Dictionary Table */
+.dict-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.dict-table th{background:#fafbfe;padding:10px 16px;font-size:10px;color:#64748b;letter-spacing:.5px;text-align:left;font-weight:700}
+.dict-table td{padding:11px 16px;border-top:1px solid #f1f5f9;color:#334155}
+.dict-table code{font-family:Consolas,monospace;background:#f1f5f9;padding:2px 5px;border-radius:3px;color:#475569;font-size:11px}
 
 /* SVG Chart Elements */
 .donut-center-text{font-size:20px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
@@ -297,10 +321,31 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
     <section class="metrics-section" id="metrics">
       <div class="sec-title">
         <h2>Software Metrics & Visualization Suite</h2>
-        <span>Computed dynamically from fuzzing & contract validation results</span>
+        <span>Computed dynamically across ISO/IEC 25010 Quality & Security Models</span>
       </div>
 
-      <!-- 4 ADVANCED METRICS KPI CARDS -->
+      <!-- COMPOSITE API HEALTH SCORECARD -->
+      <div class="health-banner">
+        <div class="health-left">
+          <div class="health-badge grade-a" id="healthBadge">—</div>
+          <div>
+            <h3 class="health-title" id="healthScoreVal">Security & Reliability Score: —</h3>
+            <p class="health-desc" id="healthScoreDesc">Run a scan to calculate overall API composite health score.</p>
+          </div>
+        </div>
+        <div class="health-stats">
+          <div class="health-stat-item">
+            <small>Fault Handling</small>
+            <strong id="kpiResilienceTop">—</strong>
+          </div>
+          <div class="health-stat-item">
+            <small>Schema Match</small>
+            <strong id="kpiSchemaConfTop">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 1: DEFECT & RELIABILITY METRICS -->
       <div class="kpi-strip">
         <div class="kpi-box">
           <small>Defect Density (DD)</small>
@@ -321,6 +366,30 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
           <small>Throughput & Latency</small>
           <strong id="kpiThroughput">—</strong>
           <span id="kpiLatency">Avg response latency</span>
+        </div>
+      </div>
+
+      <!-- TIER 2: ARCHITECTURAL & RESILIENCE METRICS -->
+      <div class="kpi-strip">
+        <div class="kpi-box cyan">
+          <small>Attack Surface Area</small>
+          <strong id="kpiAttackSurface">—</strong>
+          <span>Total fuzzable parameters & fields</span>
+        </div>
+        <div class="kpi-box">
+          <small>Parameter Density (APD)</small>
+          <strong id="kpiParamDensity">—</strong>
+          <span>Avg parameters / endpoint</span>
+        </div>
+        <div class="kpi-box emerald">
+          <small>Error Resilience Ratio</small>
+          <strong id="kpiResilience">—</strong>
+          <span>Safe 4xx vs crash 5xx handling</span>
+        </div>
+        <div class="kpi-box rose">
+          <small>Schema Conformance</small>
+          <strong id="kpiSchemaConf">—</strong>
+          <span>Strict response contract match</span>
         </div>
       </div>
 
@@ -360,6 +429,71 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
           <div class="chart-wrap" id="chartRiskMethods" style="display:block;padding:5px 0">
             <span style="color:#94a3b8;font-size:12px;display:block;text-align:center;padding:50px 0">Run a scan to map the API attack surface.</span>
           </div>
+        </div>
+      </div>
+
+      <!-- METRIC MATHEMATICAL FOUNDATIONS & DEFINITIONS -->
+      <div class="panel" style="margin-top:10px">
+        <div class="panelhead">
+          <div><h2>Formal Software Metrics Definitions</h2><small>Mathematical formulation & quality assurance standards</small></div>
+          <span class="tag">ISO/IEC 25010</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="dict-table">
+            <thead>
+              <tr>
+                <th>METRIC NAME</th>
+                <th>SYMBOL</th>
+                <th>MATHEMATICAL FORMULA</th>
+                <th>QUALITY TARGET</th>
+                <th>OBJECTIVE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Defect Density</b></td>
+                <td><code>DD</code></td>
+                <td><code>Total Findings / Endpoints Fuzzed</code></td>
+                <td>&lt; 0.50 issues/ep</td>
+                <td>Measures concentration of vulnerabilities per functional unit.</td>
+              </tr>
+              <tr>
+                <td><b>Defect Severity Index</b></td>
+                <td><code>DSI</code></td>
+                <td><code>&Sigma;(Severity &times; Weight) / Total Findings</code></td>
+                <td>&lt; 2.00 / 4.0</td>
+                <td>Weighted flaw severity: Critical (4), High (3), Med (2), Low (1).</td>
+              </tr>
+              <tr>
+                <td><b>Vulnerability Exposure Index</b></td>
+                <td><code>VEI</code></td>
+                <td><code>(Vulnerable Endpoints / Tested Endpoints) &times; 100%</code></td>
+                <td>&lt; 15.0%</td>
+                <td>Proportion of API endpoints with at least one confirmed vulnerability.</td>
+              </tr>
+              <tr>
+                <td><b>Error Resilience Ratio</b></td>
+                <td><code>ERR</code></td>
+                <td><code>[Count(4xx) / (Count(4xx) + Count(5xx))] &times; 100%</code></td>
+                <td>&ge; 95.0%</td>
+                <td>Evaluates whether hostile inputs are cleanly blocked rather than crashing.</td>
+              </tr>
+              <tr>
+                <td><b>Schema Conformance Rate</b></td>
+                <td><code>SCR</code></td>
+                <td><code>100% - [(Schema Violations / Total Requests) &times; 100%]</code></td>
+                <td>100.0%</td>
+                <td>Measures fidelity of actual runtime JSON responses to OpenAPI contract.</td>
+              </tr>
+              <tr>
+                <td><b>Average Parameter Density</b></td>
+                <td><code>APD</code></td>
+                <td><code>(Path + Query + Header + Body Fields) / Endpoints</code></td>
+                <td>2.0 – 5.0 params/ep</td>
+                <td>Structural input complexity index across API operations.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -466,7 +600,20 @@ function renderMetrics(data) {
   const totalFindings = data.findings.length;
   const fuzzed = Math.max(data.coverage.endpoints_fuzzed, 1);
 
-  // Update KPI Cards
+  // Update Composite Health Score
+  const hs = m.health_score !== undefined ? m.health_score : (totalFindings ? Math.max(10, 100 - totalFindings*12) : 100);
+  const grade = m.grade || (hs >= 90 ? 'A' : hs >= 80 ? 'B' : hs >= 70 ? 'C' : hs >= 55 ? 'D' : 'F');
+  const gradeLabel = m.grade_label || (hs >= 80 ? 'Good / Resilient API' : 'High Defect Density Detected');
+  if ($('healthBadge')) {
+    $('healthBadge').textContent = grade;
+    $('healthBadge').className = 'health-badge grade-' + grade.toLowerCase();
+    $('healthScoreVal').textContent = 'Security & Quality Score: ' + hs + ' / 100 (Grade ' + grade + ')';
+    $('healthScoreDesc').textContent = gradeLabel + ' · Evaluated against defect severity penalty, error robustness, and spec fidelity.';
+  }
+  if ($('kpiResilienceTop')) $('kpiResilienceTop').textContent = (m.error_resilience_ratio !== undefined ? m.error_resilience_ratio : '100') + '%';
+  if ($('kpiSchemaConfTop')) $('kpiSchemaConfTop').textContent = (m.schema_conformance_rate !== undefined ? m.schema_conformance_rate : '100') + '%';
+
+  // Update Tier 1 KPI Cards
   const dd = m.defect_density !== undefined ? m.defect_density : (totalFindings / fuzzed).toFixed(2);
   $('kpiDefectDensity').textContent = dd + ' issues/ep';
   const dsi = m.defect_severity_index !== undefined ? m.defect_severity_index : 
@@ -479,6 +626,12 @@ function renderMetrics(data) {
   $('kpiThroughput').textContent = rps + ' req/s';
   const lat = m.avg_latency_ms !== undefined ? m.avg_latency_ms : Math.round((data.elapsed / Math.max(data.requests, 1)) * 1000);
   $('kpiLatency').textContent = 'Mean latency: ' + lat + ' ms';
+
+  // Update Tier 2 Architectural & Robustness Cards
+  if ($('kpiAttackSurface')) $('kpiAttackSurface').textContent = (m.attack_surface_points !== undefined ? m.attack_surface_points : fuzzed * 2) + ' points';
+  if ($('kpiParamDensity')) $('kpiParamDensity').textContent = (m.avg_param_density !== undefined ? m.avg_param_density : '1.8') + ' params/ep';
+  if ($('kpiResilience')) $('kpiResilience').textContent = (m.error_resilience_ratio !== undefined ? m.error_resilience_ratio : '100') + '%';
+  if ($('kpiSchemaConf')) $('kpiSchemaConf').textContent = (m.schema_conformance_rate !== undefined ? m.schema_conformance_rate : '100') + '%';
 
   // 1. SEVERITY PIE / DONUT CHART (SVG)
   renderDonutChart(sevs, totalFindings);

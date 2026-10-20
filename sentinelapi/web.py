@@ -122,13 +122,56 @@ async def scan(options: Scan):
             for c in codes:
                 status_counts[str(c)] = max(status_counts[str(c)], 1)
 
+        # In-depth architectural & attack surface metrics
+        total_params = sum(len(ep.params) for ep in eps)
+        body_fields = sum(len(ep.body_schema.get("properties", {})) if isinstance(ep.body_schema, dict) else (1 if ep.body_schema else 0) for ep in eps)
+        attack_surface_points = total_params + body_fields
+        avg_param_density = round(attack_surface_points / max(len(eps), 1), 2)
+        unsecured_eps = sum(1 for ep in eps if not ep.secured)
+        unauthenticated_ratio = round(100 * unsecured_eps / max(len(eps), 1), 1)
+        test_generation_density = round(fz.requests / fuzzed_count, 1)
+
+        # In-depth fault resilience & contract compliance
+        count_4xx = sum(status_counts.get(str(c), 0) for c in range(400, 500))
+        count_5xx = sum(status_counts.get(str(c), 0) for c in range(500, 600)) + sum(1 for f in findings if f.kind == "SERVER_ERROR")
+        error_resilience = round(100 * count_4xx / max(count_4xx + count_5xx, 1), 1) if (count_4xx + count_5xx) > 0 else 100.0
+        schema_violations = sum(1 for f in findings if f.kind == "SCHEMA_VIOLATION")
+        schema_conformance = round(max(0, 100 - (100 * schema_violations / max(fz.requests, 1))), 1)
+
+        # Composite API Quality & Security Health Score (SHS) (0 - 100)
+        penalty = (severities.get("critical", 0) * 12 +
+                   severities.get("high", 0) * 6 +
+                   severities.get("medium", 0) * 3 +
+                   severities.get("low", 0) * 1 +
+                   min(count_5xx * 3, 15))
+        health_score = max(5, min(100, round(100 - penalty)))
+        if health_score >= 90:
+            grade, grade_label = "A", "Excellent (Secure & Robust)"
+        elif health_score >= 80:
+            grade, grade_label = "B", "Good (Minor Vulnerabilities)"
+        elif health_score >= 70:
+            grade, grade_label = "C", "Fair (Moderate Risk Flaws)"
+        elif health_score >= 55:
+            grade, grade_label = "D", "Needs Attention (High Risk)"
+        else:
+            grade, grade_label = "F", "Critical Risk (Severe Exposure)"
+
         metrics = {
+            "health_score": health_score,
+            "grade": grade,
+            "grade_label": grade_label,
             "defect_density": defect_density,
             "defect_severity_index": dsi,
             "vulnerable_endpoints_pct": vulnerable_pct,
             "vulnerable_endpoints_count": vulnerable_eps,
             "throughput_rps": round(fz.requests / max(fz.elapsed, 0.001), 1),
             "avg_latency_ms": round((fz.elapsed / max(fz.requests, 1)) * 1000, 1),
+            "attack_surface_points": attack_surface_points,
+            "avg_param_density": avg_param_density,
+            "unauthenticated_ratio": unauthenticated_ratio,
+            "test_generation_density": test_generation_density,
+            "error_resilience_ratio": error_resilience,
+            "schema_conformance_rate": schema_conformance,
             "severities": {s: severities.get(s, 0) for s in ("critical", "high", "medium", "low")},
             "vulnerability_types": type_counts,
             "methods": method_counts,
