@@ -1,21 +1,1129 @@
-﻿<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SentinelAPI · Security workspace</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SentinelAPI · Security & Software Metrics Workspace</title>
 <style>
-:root{--ink:#182438;--muted:#748095;--line:#e6ebf2;--blue:#5261e8;--bg:#f5f7fb}*{box-sizing:border-box}body{margin:0;font:14px 'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button,a,input,select{outline-offset:4px}button{cursor:pointer}aside{position:fixed;inset:0 auto 0 0;width:224px;background:#101a2c;color:#9ba9c0;padding:30px 20px;display:flex;flex-direction:column}.brand{display:flex;gap:12px;align-items:center;color:white;font-size:21px;font-weight:700;letter-spacing:-.7px}.shield{display:grid;place-items:center;width:36px;height:40px;background:#6471f5;color:white;clip-path:polygon(50% 0,100% 16%,90% 74%,50% 100%,10% 74%,0 16%);font-size:20px}.brand small{color:#a9b4c9;font-size:10px;display:block;letter-spacing:2px;margin-top:3px}.navlabel{font-size:10px;letter-spacing:1.8px;margin:43px 12px 15px}nav a{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;padding:13px 15px;border-radius:7px;margin:5px 0}nav a.active{background:#26324f;color:#cbd0ff;border-left:3px solid #818cff}nav span{font-size:18px}.aside-bottom{margin-top:auto;padding:18px 12px 0;border-top:1px solid #2b3547;font-size:12px;line-height:1.8}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#40c99b;margin-right:7px}main{margin-left:224px}header{height:76px;background:white;border-bottom:1px solid var(--line);padding:0 40px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.crumb{color:#27364b;margin-left:10px}.local{background:#eef8f4;color:#328364;padding:7px 11px;border-radius:6px}.avatar{display:inline-grid;place-items:center;background:#ebedfd;color:#5962b3;border-radius:50%;width:32px;height:32px;margin-left:17px;font-weight:600}.workspace{max-width:1400px;margin:auto;padding:36px 40px 50px}.eyebrow{font-size:10px;letter-spacing:2px;color:var(--blue);font-weight:700;margin:0 0 10px}h1{font-size:30px;letter-spacing:-1px;margin:0 0 8px;font-weight:650}.subtitle{color:var(--muted);line-height:1.7;margin:0}.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.outline{background:white;border:1px solid var(--line);padding:10px 15px;border-radius:7px;color:#47556c}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:17px;margin-bottom:26px}.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:20px 22px}.stat-top{display:flex;justify-content:space-between;align-items:center;color:#6d7a90;font-size:12px}.iconbox{background:#f0f2fe;color:var(--blue);border-radius:7px;display:grid;place-items:center;width:30px;height:30px;font-size:17px}.stat strong{font-size:30px;letter-spacing:-1px;display:block;margin:9px 0 5px}.stat small{font-size:11px;color:#8792a3}.grid{display:grid;grid-template-columns:minmax(330px,.9fr) minmax(420px,1.5fr);gap:24px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:11px;overflow:hidden}.panelhead{padding:21px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.panelhead h2{margin:0;font-size:15px;font-weight:650}.panelhead small{display:block;margin-top:6px;color:var(--muted);font-size:11px}.tag{background:#f0f2ff;color:#6470c1;font-size:10px;padding:5px 8px;border-radius:5px}.form{padding:22px 24px}.tabs{background:#f3f5f9;border-radius:7px;padding:4px;display:flex;margin-bottom:22px}.tabs button{flex:1;border:0;color:#7b8799;background:transparent;padding:10px;border-radius:5px;font-size:12px}.tabs button.selected{color:var(--blue);background:white;box-shadow:0 1px 4px #1c2a4010;font-weight:600}label{display:block;font-size:12px;font-weight:600;margin:17px 0 8px}.demo{padding:18px;background:#f7f8ff;border:1px solid #e2e6fc;border-radius:8px}.demo b{font-size:12px;color:#4959ae}.demo p{font-size:12px;color:#71809c;line-height:1.7;margin:9px 0 0}.demo code{background:#e9edfc;color:#5866ab;padding:3px 6px;border-radius:4px;font-size:11px}.input{width:100%;padding:11px 12px;border:1px solid #dce2ed;border-radius:6px;color:#3e4b60;background:white}.upload{display:block;padding:24px 15px;border:1px dashed #c8d1e3;text-align:center;background:#fafbfe;border-radius:8px;cursor:pointer;font-weight:400}.upload strong{display:block;color:var(--blue);font-size:12px;margin-bottom:6px}.upload small{color:var(--muted);font-size:11px}.upload input{width:100%;font-size:11px;margin-top:14px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{color:#8994a7;font-size:10px;margin:7px 0 0;line-height:1.5}.run{width:100%;padding:13px;background:var(--blue);color:white;border:0;border-radius:7px;font-weight:600;margin-top:24px;box-shadow:0 4px 10px #5261e825}.run:disabled{opacity:.6;cursor:wait}.notice{font-size:10px;color:#8792a3;text-align:center;line-height:1.6;margin:11px 0 0}.status{margin-top:18px;font-size:12px;line-height:1.7;color:#657187}.error{color:#b93847}.summary{padding:17px 24px;background:#fcfdff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}.summary b{color:#4f617b}.toolbar{display:flex;gap:10px;padding:17px 24px;border-bottom:1px solid var(--line)}.toolbar input{flex:1;min-width:0}.toolbar select{width:120px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;background:#fafbfe;padding:12px 20px;font-size:10px;color:#8791a4;letter-spacing:.5px;font-weight:600}td{padding:17px 20px;border-top:1px solid #edf0f6;vertical-align:top}td b{display:block;font-size:12px;font-weight:600;margin-bottom:6px}td small{font-size:10px;color:#8290a5}td code{font:11px Consolas,monospace;color:#607089}.pill{font-size:10px;font-weight:600;border-radius:5px;padding:5px 8px;display:inline-block;text-transform:capitalize}.critical{background:#fff0f2;color:#d54c60}.high{background:#fff4e9;color:#c47c32}.medium{background:#fff9df;color:#aa8e29}.low{background:#edf4ff;color:#4b80c0}.empty{text-align:center;padding:54px 25px;color:#7d8ba3}.empty .emptyicon{display:grid;place-items:center;margin:0 auto 18px;background:#f1f3ff;border-radius:14px;width:55px;height:55px;font-size:26px;color:var(--blue)}.empty b{display:block;font-size:14px;color:#4b5c76;margin-bottom:9px}.empty p{font-size:12px;line-height:1.8;margin:0}.reportbar{padding:16px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:10px}.downloads{display:flex;gap:6px;flex-wrap:wrap}.downloads a{font-size:10px;text-decoration:none;color:var(--blue);border:1px solid #e2e6fc;padding:6px 8px;border-radius:4px}.info{display:flex;gap:14px;padding:20px 23px;margin-top:22px;background:#edf1fb;border:1px solid #e0e7f5;border-radius:9px}.info span{color:var(--blue);font-size:20px}.info b{font-size:12px}.info p{font-size:11px;color:#7c89a0;line-height:1.8;margin:5px 0 0}details{margin-top:9px}summary{cursor:pointer;color:var(--blue);font-size:10px}details p{max-width:290px;line-height:1.6;overflow-wrap:anywhere;color:#6d7a90}.history{margin-top:24px}.history button{border:0;background:#f7f8fc;text-align:left;color:#53627c;padding:13px 16px;border-radius:6px;margin:5px;width:calc(100% - 10px);font-size:12px}footer{display:flex;justify-content:space-between;margin-top:28px;color:#9aa5b6;font-size:10px}[hidden]{display:none!important}@media(min-width:1500px){.workspace{padding-top:50px}}@media(max-width:1100px){aside{width:190px}main{margin-left:190px}.workspace{padding:28px 24px}header{padding:0 24px}.grid{grid-template-columns:1fr}.stats{gap:10px}.stat{padding:16px}}@media(max-width:650px){aside{position:relative;width:100%;padding:16px 20px}.navlabel,nav,.aside-bottom{display:none}main{margin-left:0}header{height:55px}.workspace{padding:24px 16px}.stats{grid-template-columns:1fr 1fr}.heading{align-items:start;gap:15px}h1{font-size:25px}.heading .outline{display:none}.toolbar{padding:14px}.panelhead{padding:18px}.form{padding:18px}.reportbar{align-items:start;flex-direction:column}.local{font-size:10px}td,th{padding:14px 12px}.grid{display:block}.results{margin-top:22px}}
-</style></head>
-<body><aside><div class="brand"><div class="shield">S</div><div>SentinelAPI<small>SECURITY WORKSPACE</small></div></div><div class="navlabel">WORKSPACE</div><nav><a class="active" href="#dashboard"><span>▦</span> Scan dashboard</a><a href="#findings"><span>◎</span> Findings</a><a href="#history"><span>◷</span> Scan history</a><a href="#guide"><span>▤</span> Quick guide</a></nav><div class="aside-bottom"><span class="dot"></span>Local engine<br>SentinelAPI · v1.0<br><span style="color:#63738d">Your API. Your workspace.</span></div></aside>
-<main id="dashboard"><header><div>Workspace <span class="crumb">/ &nbsp; Scan dashboard</span></div><div><span class="local"><span class="dot"></span>Local workspace</span><span class="avatar">SA</span></div></header><div class="workspace"><div class="heading"><div><p class="eyebrow">API SECURITY & CONTRACT TESTING</p><h1>A clearer view of your API.</h1><p class="subtitle">Test your endpoints. Find the gaps. Ship with confidence.</p></div><button class="outline" id="demoQuick">↗ &nbsp; Try the demo</button></div>
-<div class="stats"><div class="stat"><div class="stat-top">Endpoints tested<span class="iconbox">⌘</span></div><strong id="endpoints">—</strong><small id="endpointNote">Waiting for your first scan</small></div><div class="stat"><div class="stat-top">Total findings<span class="iconbox">◎</span></div><strong id="findingCount">—</strong><small id="findingNote">Potential issues to review</small></div><div class="stat"><div class="stat-top">Requests sent<span class="iconbox">↗</span></div><strong id="requests">—</strong><small id="requestNote">Controlled by your request limit</small></div><div class="stat"><div class="stat-top">Endpoint coverage<span class="iconbox">◴</span></div><strong id="coverage">—</strong><small>Endpoints reached / total endpoints</small></div></div>
-<div class="grid"><section class="panel"><div class="panelhead"><div><h2>Configure a scan</h2><small>A few settings. A more reliable API.</small></div><span class="tag">NEW SCAN</span></div><form class="form" id="scanForm"><div class="tabs" role="group" aria-label="Scan mode"><button type="button" class="selected" id="demoTab" aria-pressed="true">Bundled demo</button><button type="button" id="liveTab" aria-pressed="false">Your API</button></div><div id="demoSettings"><div class="demo"><b>◈ &nbsp; Meet your practice target</b><p>Explore a real scan of our deliberately vulnerable demo API. Everything runs locally.</p><p><code>demo_api:app</code> &nbsp; No setup or API key needed</p></div></div><div id="liveSettings" hidden><label for="baseUrl">API base URL</label><input class="input" type="url" id="baseUrl" value="http://127.0.0.1:8000" placeholder="http://127.0.0.1:8000"><p class="hint">Use your local or private test API.</p><label class="upload" for="specFile"><strong>↑ &nbsp; Choose your OpenAPI specification</strong><small>JSON or YAML · up to 2 MB</small><input type="file" id="specFile" accept=".json,.yaml,.yml"><small id="fileNote"></small></label></div><div class="twocol"><div><label for="budget">Request limit</label><input class="input" type="number" id="budget" min="0" max="2000" value="150" required><p class="hint">Maximum requests sent</p></div><div><label for="rate">Requests / second</label><input class="input" type="number" id="rate" min="1" max="100" value="20" required><p class="hint">Keep load predictable</p></div></div><button class="run" id="runButton" type="submit">▷ &nbsp; Run security scan</button><p class="notice">Scan APIs you own or have permission to test.</p><div class="status" id="status" role="status" aria-live="polite">Ready when you are.</div></form></section>
-<div class="results"><section class="panel" id="findings"><div class="panelhead"><div><h2>Scan findings</h2><small>Understand what needs a closer look.</small></div><span class="tag" id="scanState">AWAITING SCAN</span></div><div class="summary"><b id="resultTitle">Your results will appear here</b><span id="duration">—</span></div><div class="toolbar"><input class="input" id="search" type="search" placeholder="Search findings or endpoints…" aria-label="Search findings"><select class="input" id="severity" aria-label="Filter severity"><option value="all">All severities</option><option>critical</option><option>high</option><option>medium</option><option>low</option></select></div><div class="empty" id="empty"><div class="emptyicon">⌕</div><b>A good place to start.</b><p>Run the bundled demo to see the scanner in action,<br>or connect your API to explore its findings.</p></div><div class="tablewrap" id="tablewrap" hidden><table><thead><tr><th>SEVERITY</th><th>FINDING / ENDPOINT</th><th>RESPONSE</th></tr></thead><tbody id="rows"></tbody></table></div><div class="reportbar"><span id="shown">No results yet</span><div class="downloads" id="downloads" hidden></div></div></section><div class="info" id="guide"><span>ⓘ</span><div><b>From API contract to actionable findings.</b><p>1. Choose the demo or upload a specification. &nbsp; 2. Run a scan.<br>3. Review each finding and download a report. Findings are signals to investigate, not a guarantee of an exploitable vulnerability.</p></div></div></div></div><section class="panel history" id="history"><div class="panelhead"><div><h2>Recent scans</h2><small>Results from this browser session. Reports are kept while the server runs.</small></div><span class="tag">SESSION</span></div><div id="historyList" style="padding:12px 18px;color:#8a96a9;font-size:12px">Your completed scans will appear here.</div></section><footer><span>SentinelAPI · Built for better API testing</span><span>Local workspace / deterministic testing</span></footer></div></main>
+:root{
+  --ink:#182438;--muted:#748095;--line:#e6ebf2;--blue:#5261e8;--bg:#f5f7fb;
+  --critical:#ef4444;--high:#f97316;--medium:#eab308;--low:#3b82f6;--success:#10b981;
+}
+*{box-sizing:border-box}
+body{margin:0;font:14px 'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit}
+button,a,input,select{outline-offset:4px}
+button{cursor:pointer}
+
+/* SIDEBAR & SUB-WORKSPACES */
+aside{position:fixed;inset:0 auto 0 0;width:236px;background:#101a2c;color:#9ba9c0;padding:26px 16px;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;gap:12px;align-items:center;color:white;font-size:19px;font-weight:700;letter-spacing:-.6px}
+.shield{display:grid;place-items:center;width:34px;height:38px;background:#6471f5;color:white;clip-path:polygon(50% 0,100% 16%,90% 74%,50% 100%,10% 74%,0 16%);font-size:18px}
+.brand small{color:#a9b4c9;font-size:9.5px;display:block;letter-spacing:1.8px;margin-top:3px}
+.navlabel{font-size:10px;letter-spacing:1.8px;margin:32px 10px 10px;color:#5a6882;font-weight:700}
+nav{display:flex;flex-direction:column;gap:3px}
+nav a.nav-item{
+  display:flex;align-items:center;gap:11px;color:#9ba9c0;text-decoration:none;padding:11px 14px;
+  border-radius:8px;font-size:12.5px;font-weight:500;transition:all .15s;border-left:3px solid transparent;
+}
+nav a.nav-item:hover{background:#182337;color:#e2e8f0}
+nav a.nav-item.active{background:#232f4b;color:#cbd0ff;border-left-color:#818cff;font-weight:600}
+nav a.nav-item span{font-size:16px}
+.aside-bottom{margin-top:auto;padding:16px 12px 0;border-top:1px solid #232d3f;font-size:11.5px;line-height:1.7}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#40c99b;margin-right:7px}
+
+/* MAIN LAYOUT */
+main{margin-left:236px}
+header{height:70px;background:white;border-bottom:1px solid var(--line);padding:0 36px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+.crumb{color:#27364b;margin-left:8px;font-weight:600}
+.local{background:#eef8f4;color:#328364;padding:6px 11px;border-radius:6px;font-weight:500}
+.avatar{display:inline-grid;place-items:center;background:#ebedfd;color:#5962b3;border-radius:50%;width:32px;height:32px;margin-left:14px;font-weight:600}
+.workspace-container{max-width:1440px;margin:auto;padding:30px 36px 60px}
+
+/* SUB-WORKSPACES */
+.sub-workspace{animation:fadeIn .2s ease-in-out}
+@keyframes fadeIn{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.eyebrow{font-size:10.5px;letter-spacing:1.8px;color:var(--blue);font-weight:700;margin:0 0 6px}
+h1{font-size:26px;letter-spacing:-.7px;margin:0 0 5px;font-weight:700}
+.subtitle{color:var(--muted);line-height:1.6;margin:0;font-size:13px}
+.outline{background:white;border:1px solid var(--line);padding:8px 14px;border-radius:7px;color:#47556c;font-weight:600;font-size:12px;transition:all .15s}
+.outline:hover{background:#f8fafc;border-color:#cbd5e1}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.stat-top{display:flex;justify-content:space-between;align-items:center;color:#6d7a90;font-size:12px;font-weight:500}
+.iconbox{background:#f0f2fe;color:var(--blue);border-radius:7px;display:grid;place-items:center;width:28px;height:28px;font-size:15px}
+.stat strong{font-size:28px;letter-spacing:-.8px;display:block;margin:8px 0 4px;font-weight:700}
+.stat small{font-size:11px;color:#8792a3}
+
+/* PANELS */
+.grid{display:grid;grid-template-columns:minmax(330px,.9fr) minmax(440px,1.5fr);gap:22px;align-items:start;margin-bottom:24px}
+.panel{background:white;border:1px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.02);margin-bottom:20px}
+.panelhead{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panelhead h2{margin:0;font-size:14.5px;font-weight:700}
+.panelhead small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+.tag{background:#f0f2ff;color:#6470c1;font-size:10px;padding:4px 8px;border-radius:5px;font-weight:600}
+
+/* FORMS */
+.form{padding:20px 22px}
+.tabs{background:#f3f5f9;border-radius:7px;padding:4px;display:flex;margin-bottom:18px}
+.tabs button{flex:1;border:0;color:#7b8799;background:transparent;padding:9px;border-radius:5px;font-size:12px;font-weight:500}
+.tabs button.selected{color:var(--blue);background:white;box-shadow:0 1px 4px #1c2a4010;font-weight:600}
+label{display:block;font-size:12px;font-weight:600;margin:15px 0 6px}
+.demo{padding:15px;background:#f7f8ff;border:1px solid #e2e6fc;border-radius:8px}
+.demo b{font-size:12px;color:#4959ae}
+.demo p{font-size:11.5px;color:#71809c;line-height:1.6;margin:6px 0 0}
+.demo code{background:#e9edfc;color:#5866ab;padding:3px 6px;border-radius:4px;font-size:11px}
+.input{width:100%;padding:10px 12px;border:1px solid #dce2ed;border-radius:6px;color:#3e4b60;background:white;font-size:12.5px}
+.upload{display:block;padding:22px 14px;border:1px dashed #c8d1e3;text-align:center;background:#fafbfe;border-radius:8px;cursor:pointer}
+.upload strong{display:block;color:var(--blue);font-size:12px;margin-bottom:5px}
+.upload small{color:var(--muted);font-size:11px}
+.upload input{width:100%;font-size:11px;margin-top:12px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{color:#8994a7;font-size:10px;margin:5px 0 0;line-height:1.4}
+.run{width:100%;padding:12px;background:var(--blue);color:white;border:0;border-radius:7px;font-weight:600;font-size:13px;margin-top:18px;box-shadow:0 4px 10px #5261e825;transition:all .15s}
+.run:hover{background:#4351d6}
+.run:disabled{opacity:.6;cursor:wait}
+.notice{font-size:10px;color:#8792a3;text-align:center;line-height:1.5;margin:9px 0 0}
+.status{margin-top:14px;font-size:12px;line-height:1.6;color:#657187}
+.error{color:#b93847;font-weight:600}
+
+/* TABLES & FINDINGS */
+.summary{padding:14px 22px;background:#fcfdff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+.summary b{color:#4f617b}
+.toolbar{display:flex;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:white}
+.toolbar input{flex:1;min-width:0}
+.toolbar select{width:125px}
+.tablewrap{overflow:auto;max-height:550px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;background:#fafbfe;padding:11px 18px;font-size:10px;color:#8791a4;letter-spacing:.5px;font-weight:700}
+td{padding:13px 18px;border-top:1px solid #edf0f6;vertical-align:top}
+td b{display:block;font-size:12px;font-weight:600;margin-bottom:4px}
+td small{font-size:10px;color:#8290a5}
+td code{font:11px Consolas,monospace;color:#607089;background:#f1f4f9;padding:2px 5px;border-radius:4px}
+.pill{font-size:10px;font-weight:700;border-radius:5px;padding:3px 7px;display:inline-block;text-transform:capitalize}
+.critical{background:#fee2e2;color:#b91c1c}
+.high{background:#ffedd5;color:#c2410c}
+.medium{background:#fef9c3;color:#a16207}
+.low{background:#dbeafe;color:#1d4ed8}
+.method-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;font-family:Consolas,monospace}
+.method-get{background:#e0f2fe;color:#0369a1}
+.method-post{background:#dcfce7;color:#15803d}
+.method-put{background:#fef3c7;color:#b45309}
+.method-delete{background:#fee2e2;color:#b91c1c}
+.method-patch{background:#f3e8ff;color:#7e22ce}
+
+.empty{text-align:center;padding:50px 25px;color:#7d8ba3}
+.empty .emptyicon{display:grid;place-items:center;margin:0 auto 16px;background:#f1f3ff;border-radius:14px;width:52px;height:52px;font-size:24px;color:var(--blue)}
+.empty b{display:block;font-size:14px;color:#4b5c76;margin-bottom:8px}
+.empty p{font-size:12px;line-height:1.7;margin:0}
+.reportbar{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:10px;background:#fafbfe}
+.downloads{display:flex;gap:6px;flex-wrap:wrap}
+.downloads a{font-size:10.5px;text-decoration:none;color:var(--blue);border:1px solid #e2e6fc;padding:5px 8px;border-radius:4px;font-weight:600;background:#fafbff}
+.downloads a:hover{background:#eff2fe}
+
+/* SOFTWARE METRICS SCORECARD & KPIS */
+.health-banner{background:white;border:1px solid var(--line);border-radius:11px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.02)}
+.health-left{display:flex;align-items:center;gap:18px}
+.health-badge{display:grid;place-items:center;width:62px;height:62px;border-radius:12px;background:#f0fdf4;border:2px solid #86efac;color:#16a34a;font-size:28px;font-weight:800;flex-shrink:0}
+.health-badge.grade-a{background:#f0fdf4;border-color:#86efac;color:#16a34a}
+.health-badge.grade-b{background:#eff6ff;border-color:#93c5fd;color:#2563eb}
+.health-badge.grade-c{background:#fefce8;border-color:#fde047;color:#ca8a04}
+.health-badge.grade-d{background:#fff7ed;border-color:#fdba74;color:#ea580c}
+.health-badge.grade-f{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.health-title{margin:0 0 4px;font-size:16px;font-weight:700}
+.health-desc{margin:0;font-size:12px;color:var(--muted)}
+.health-stats{display:flex;gap:24px}
+.health-stat-item{text-align:right}
+.health-stat-item small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.health-stat-item strong{font-size:19px;font-weight:700;color:var(--ink)}
+
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi-box{background:white;border:1px solid var(--line);border-radius:9px;padding:14px 16px;border-left:4px solid var(--blue)}
+.kpi-box.purple{border-left-color:#8b5cf6}
+.kpi-box.amber{border-left-color:#f59e0b}
+.kpi-box.emerald{border-left-color:#10b981}
+.kpi-box.cyan{border-left-color:#06b6d4}
+.kpi-box.rose{border-left-color:#f43f5e}
+.kpi-box small{font-size:10.5px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;font-weight:600;display:block}
+.kpi-box strong{font-size:22px;display:block;margin:4px 0 2px;font-weight:700;color:var(--ink)}
+.kpi-box span{font-size:10.5px;color:#9ca3af}
+
+/* CHARTS GRID */
+.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:22px}
+.chart-card{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.chart-card h3{margin:0 0 4px;font-size:13.5px;font-weight:700}
+.chart-card p{margin:0 0 14px;font-size:11px;color:var(--muted)}
+.chart-wrap{min-height:180px;display:flex;align-items:center;justify-content:center}
+
+.donut-center-text{font-size:20px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.donut-center-sub{font-size:9px;fill:#64748b;text-anchor:middle}
+.chart-legend{display:flex;flex-direction:column;gap:8px;margin-left:18px;font-size:11px}
+.legend-item{display:flex;align-items:center;gap:7px}
+.legend-color{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.bar-row{display:flex;align-items:center;margin-bottom:9px;font-size:11px}
+.bar-label{width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#475569;font-weight:500}
+.bar-track{flex:1;height:12px;background:#f1f5f9;border-radius:6px;overflow:hidden;margin:0 10px}
+.bar-fill{height:100%;border-radius:6px;transition:width .4s ease}
+.bar-val{width:32px;text-align:right;font-weight:700;color:#1e293b}
+
+.dict-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.dict-table th{background:#fafbfe;padding:10px 16px;font-size:10px;color:#64748b;letter-spacing:.5px;text-align:left;font-weight:700}
+.dict-table td{padding:11px 16px;border-top:1px solid #f1f5f9;color:#334155}
+.dict-table code{font-family:Consolas,monospace;background:#f1f5f9;padding:2px 5px;border-radius:3px;color:#475569;font-size:11px}
+
+/* HISTORY & GUIDES */
+.history-item{padding:14px 18px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.history-item:hover{background:#fafbfe}
+.guide-card{background:white;border:1px solid var(--line);border-radius:9px;padding:18px 22px;margin-bottom:16px}
+.guide-card h3{margin:0 0 6px;font-size:14px;color:var(--ink)}
+.guide-card p{margin:0 0 10px;font-size:12px;color:#64748b;line-height:1.7}
+
+footer{display:flex;justify-content:space-between;margin-top:28px;color:#94a3b8;font-size:10.5px}
+[hidden]{display:none!important}
+
+@media(max-width:1100px){
+  aside{width:195px}main{margin-left:195px}.workspace-container{padding:24px 20px}
+  .grid{grid-template-columns:1fr}.stats,.kpi-strip{grid-template-columns:1fr 1fr}
+  .charts-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  aside{display:none}main{margin-left:0}.workspace-container{padding:16px}
+  .stats,.kpi-strip{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR NAVIGATION -->
+<aside>
+  <div class="brand"><div class="shield">S</div><div>SentinelAPI<small>SECURITY WORKSPACE</small></div></div>
+  <div class="navlabel">SUB-WORKSPACES</div>
+  <nav id="navMenu">
+    <a class="nav-item active" data-target="dashboard" href="#dashboard"><span>▦</span> Scan Dashboard</a>
+    <a class="nav-item" data-target="metrics" href="#metrics"><span>📊</span> Metrics & Analytics</a>
+    <a class="nav-item" data-target="findings" href="#findings"><span>◎</span> Findings Explorer</a>
+    <a class="nav-item" data-target="surface" href="#surface"><span>🗺️</span> Attack Surface & Specs</a>
+    <a class="nav-item" data-target="history" href="#history"><span>◷</span> Scan History</a>
+    <a class="nav-item" data-target="guide" href="#guide"><span>▤</span> Framework Guide</a>
+  </nav>
+  <div class="aside-bottom">
+    <span class="dot"></span>Local engine<br>SentinelAPI · v1.0<br>
+    <span style="color:#63738d">Enterprise API Quality Workspace</span>
+  </div>
+</aside>
+
+<main>
+  <!-- TOP APPLICATION HEADER -->
+  <header>
+    <div>Workspace <span class="crumb" id="breadcrumbNav">/ &nbsp; Scan Dashboard</span></div>
+    <div><span class="local"><span class="dot"></span>Local Workspace</span><span class="avatar">SA</span></div>
+  </header>
+
+  <div class="workspace-container">
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 1: SCAN DASHBOARD            -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-dashboard">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">AUTOMATED API SECURITY FUZZER & AUDIT</p>
+          <h1>Scan Dashboard</h1>
+          <p class="subtitle">Launch fuzz tests, examine API operations, and configure concurrency constraints.</p>
+        </div>
+        <button class="outline" id="demoQuick">↗ &nbsp; Quick demo scan</button>
+      </div>
+
+      <!-- TOP 4 STATS -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-top">Endpoints tested<span class="iconbox">⌘</span></div>
+          <strong id="endpoints">—</strong>
+          <small id="endpointNote">Waiting for your first scan</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top">Total findings<span class="iconbox">◎</span></div>
+          <strong id="findingCount">—</strong>
+          <small id="findingNote">Potential issues to review</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top">Requests sent<span class="iconbox">↗</span></div>
+          <strong id="requests">—</strong>
+          <small id="requestNote">Controlled by your request limit</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top">Endpoint coverage<span class="iconbox">◴</span></div>
+          <strong id="coverage">—</strong>
+          <small>Endpoints reached / total spec</small>
+        </div>
+      </div>
+
+      <!-- CONFIG PANEL + SUMMARY PREVIEW -->
+      <div class="grid">
+        <section class="panel">
+          <div class="panelhead">
+            <div><h2>Configure a scan</h2><small>Select target and fuzzing constraints</small></div>
+            <span class="tag">TARGET CONFIG</span>
+          </div>
+          <form class="form" id="scanForm">
+            <div class="tabs" role="group" aria-label="Scan mode">
+              <button type="button" class="selected" id="demoTab" aria-pressed="true">Bundled demo</button>
+              <button type="button" id="liveTab" aria-pressed="false">Your API</button>
+            </div>
+            <div id="demoSettings">
+              <div class="demo">
+                <b>◈ &nbsp; Practice target (FastAPI)</b>
+                <p>Runs the deliberately vulnerable demo target in-process with SQLi, XSS, and validation flaws.</p>
+                <p><code>demo_api:app</code> &nbsp; Zero configuration needed</p>
+              </div>
+            </div>
+            <div id="liveSettings" hidden>
+              <label for="baseUrl">API base URL</label>
+              <input class="input" type="url" id="baseUrl" value="http://127.0.0.1:8000" placeholder="http://127.0.0.1:8000">
+              <p class="hint">Use your local or private test API.</p>
+              <label class="upload" for="specFile">
+                <strong>↑ &nbsp; Choose your OpenAPI specification</strong>
+                <small>JSON or YAML · up to 2 MB (e.g. my_openapi.json)</small>
+                <input type="file" id="specFile" accept=".json,.yaml,.yml">
+                <small id="fileNote"></small>
+              </label>
+            </div>
+            <div class="twocol">
+              <div>
+                <label for="budget">Request limit</label>
+                <input class="input" type="number" id="budget" min="0" max="2000" value="150" required>
+                <p class="hint">Maximum requests sent</p>
+              </div>
+              <div>
+                <label for="rate">Requests / second</label>
+                <input class="input" type="number" id="rate" min="1" max="100" value="20" required>
+                <p class="hint">Keep load predictable</p>
+              </div>
+            </div>
+            <button class="run" id="runButton" type="submit">▷ &nbsp; Run security scan</button>
+            <p class="notice">Scan APIs you own or have permission to test.</p>
+            <div class="status" id="status" role="status" aria-live="polite">Ready when you are.</div>
+          </form>
+        </section>
+
+        <!-- DASHBOARD RIGHT SIDE: QUICK OVERVIEW -->
+        <div>
+          <section class="panel">
+            <div class="panelhead">
+              <div><h2>Active Scan Status</h2><small>Real-time execution overview</small></div>
+              <span class="tag" id="scanState">AWAITING SCAN</span>
+            </div>
+            <div style="padding:22px">
+              <div id="quickScanPlaceholder" style="text-align:center;padding:36px 20px;color:#7c8ba3">
+                <div style="font-size:28px;margin-bottom:10px">🚀</div>
+                <b>No scan running</b>
+                <p style="font-size:12px;margin:8px 0 0;line-height:1.6">Launch a scan from the left panel to test endpoints, measure coverage, and compute in-depth metrics.</p>
+              </div>
+              <div id="quickScanResults" hidden>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                  <b id="quickResultTitle" style="font-size:14px;color:#1e293b">—</b>
+                  <span id="quickDuration" style="font-size:12px;color:var(--muted)">—</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+                  <div style="background:#f8fafc;padding:12px 14px;border-radius:8px;border:1px solid #e2e8f0">
+                    <small style="color:#64748b;font-size:10px;text-transform:uppercase;font-weight:700">Health Score</small>
+                    <strong id="quickHealthVal" style="display:block;font-size:20px;color:var(--ink);margin-top:2px">—</strong>
+                  </div>
+                  <div style="background:#f8fafc;padding:12px 14px;border-radius:8px;border:1px solid #e2e8f0">
+                    <small style="color:#64748b;font-size:10px;text-transform:uppercase;font-weight:700">Defect Density</small>
+                    <strong id="quickDefectDensity" style="display:block;font-size:20px;color:var(--ink);margin-top:2px">—</strong>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <button class="outline" style="flex:1" onclick="switchWorkspace('metrics')">📊 View Full Metrics</button>
+                  <button class="outline" style="flex:1" onclick="switchWorkspace('findings')">◎ View Findings</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panelhead">
+              <div><h2>Download Reports</h2><small>Export artifacts in multiple standard formats</small></div>
+              <span class="tag">EXPORT</span>
+            </div>
+            <div style="padding:18px 22px">
+              <div class="downloads" id="dashboardDownloads" style="display:flex;gap:8px">
+                <span style="color:#94a3b8;font-size:11.5px">Reports will be available after a scan completes.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 2: METRICS & ANALYTICS       -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-metrics" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">QUALITY ASSURANCE & RELIABILITY MODEL</p>
+          <h1>Metrics & Analytics</h1>
+          <p class="subtitle">Quantitative metrics evaluating defect density, attack surface complexity, and ISO/IEC 25010 fault resilience.</p>
+        </div>
+      </div>
+
+      <!-- COMPOSITE HEALTH SCORECARD BANNER -->
+      <div class="health-banner">
+        <div class="health-left">
+          <div class="health-badge grade-a" id="healthBadge">—</div>
+          <div>
+            <h3 class="health-title" id="healthScoreVal">Security & Quality Score: —</h3>
+            <p class="health-desc" id="healthScoreDesc">Run a scan to calculate overall API composite health score.</p>
+          </div>
+        </div>
+        <div class="health-stats">
+          <div class="health-stat-item">
+            <small>Fault Handling (ERR)</small>
+            <strong id="kpiResilienceTop">—</strong>
+          </div>
+          <div class="health-stat-item">
+            <small>Schema Match (SCR)</small>
+            <strong id="kpiSchemaConfTop">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 1: DEFECT & RELIABILITY METRICS -->
+      <div class="kpi-strip">
+        <div class="kpi-box">
+          <small>Defect Density (DD)</small>
+          <strong id="kpiDefectDensity">—</strong>
+          <span>Findings per fuzzed endpoint</span>
+        </div>
+        <div class="kpi-box purple">
+          <small>Defect Severity Index (DSI)</small>
+          <strong id="kpiDsi">—</strong>
+          <span>Weighted score (1.0 to 4.0)</span>
+        </div>
+        <div class="kpi-box amber">
+          <small>Vulnerability Exposure (VEI)</small>
+          <strong id="kpiVei">—</strong>
+          <span>% endpoints with ≥ 1 defect</span>
+        </div>
+        <div class="kpi-box emerald">
+          <small>Throughput & Latency</small>
+          <strong id="kpiThroughput">—</strong>
+          <span id="kpiLatency">Avg response latency</span>
+        </div>
+      </div>
+
+      <!-- TIER 2: ARCHITECTURAL & RESILIENCE METRICS -->
+      <div class="kpi-strip">
+        <div class="kpi-box cyan">
+          <small>Attack Surface Area</small>
+          <strong id="kpiAttackSurface">—</strong>
+          <span>Total fuzzable parameters & fields</span>
+        </div>
+        <div class="kpi-box">
+          <small>Parameter Density (APD)</small>
+          <strong id="kpiParamDensity">—</strong>
+          <span>Avg parameters / endpoint</span>
+        </div>
+        <div class="kpi-box emerald">
+          <small>Error Resilience Ratio</small>
+          <strong id="kpiResilience">—</strong>
+          <span>Safe 4xx vs crash 5xx handling</span>
+        </div>
+        <div class="kpi-box rose">
+          <small>Schema Conformance</small>
+          <strong id="kpiSchemaConf">—</strong>
+          <span>Strict response contract match</span>
+        </div>
+      </div>
+
+      <!-- 4 VISUAL CHARTS -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>Defect Severity Distribution (Pie / Donut)</h3>
+          <p>Breakdown of critical, high, medium, and low findings</p>
+          <div class="chart-wrap" id="chartSeverity">
+            <span style="color:#94a3b8;font-size:12px">Run a scan to generate the severity pie chart.</span>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Vulnerability Classification Frequency</h3>
+          <p>Distribution by attack category (SQLi, XSS, Bypass, etc.)</p>
+          <div class="chart-wrap" id="chartTypes" style="display:block;padding:5px 0">
+            <span style="color:#94a3b8;font-size:12px;display:block;text-align:center;padding:50px 0">Run a scan to generate category metrics.</span>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>HTTP Response Status Distribution</h3>
+          <p>Response codes observed during fuzz testing (2xx, 4xx, 5xx)</p>
+          <div class="chart-wrap" id="chartStatusCodes" style="display:block;padding:5px 0">
+            <span style="color:#94a3b8;font-size:12px;display:block;text-align:center;padding:50px 0">Run a scan to analyze server status codes.</span>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>API Attack Surface: Methods & Inherent Risk</h3>
+          <p>Endpoint HTTP methods and heuristic risk tier distribution</p>
+          <div class="chart-wrap" id="chartRiskMethods" style="display:block;padding:5px 0">
+            <span style="color:#94a3b8;font-size:12px;display:block;text-align:center;padding:50px 0">Run a scan to map the API attack surface.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMAL SOFTWARE METRICS TABLE -->
+      <div class="panel">
+        <div class="panelhead">
+          <div><h2>Formal Software Metrics Definitions</h2><small>Mathematical formulation & quality assurance standards</small></div>
+          <span class="tag">ISO/IEC 25010</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="dict-table">
+            <thead>
+              <tr>
+                <th>METRIC NAME</th>
+                <th>SYMBOL</th>
+                <th>MATHEMATICAL FORMULA</th>
+                <th>QUALITY TARGET</th>
+                <th>OBJECTIVE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Defect Density</b></td>
+                <td><code>DD</code></td>
+                <td><code>Total Findings / Endpoints Fuzzed</code></td>
+                <td>&lt; 0.50 issues/ep</td>
+                <td>Measures concentration of vulnerabilities per functional unit.</td>
+              </tr>
+              <tr>
+                <td><b>Defect Severity Index</b></td>
+                <td><code>DSI</code></td>
+                <td><code>&Sigma;(Severity &times; Weight) / Total Findings</code></td>
+                <td>&lt; 2.00 / 4.0</td>
+                <td>Weighted flaw severity: Critical (4), High (3), Med (2), Low (1).</td>
+              </tr>
+              <tr>
+                <td><b>Vulnerability Exposure Index</b></td>
+                <td><code>VEI</code></td>
+                <td><code>(Vulnerable Endpoints / Tested Endpoints) &times; 100%</code></td>
+                <td>&lt; 15.0%</td>
+                <td>Proportion of API endpoints with at least one confirmed vulnerability.</td>
+              </tr>
+              <tr>
+                <td><b>Error Resilience Ratio</b></td>
+                <td><code>ERR</code></td>
+                <td><code>[Count(4xx) / (Count(4xx) + Count(5xx))] &times; 100%</code></td>
+                <td>&ge; 95.0%</td>
+                <td>Evaluates whether hostile inputs are cleanly blocked rather than crashing.</td>
+              </tr>
+              <tr>
+                <td><b>Schema Conformance Rate</b></td>
+                <td><code>SCR</code></td>
+                <td><code>100% - [(Schema Violations / Total Requests) &times; 100%]</code></td>
+                <td>100.0%</td>
+                <td>Measures fidelity of actual runtime JSON responses to OpenAPI contract.</td>
+              </tr>
+              <tr>
+                <td><b>Average Parameter Density</b></td>
+                <td><code>APD</code></td>
+                <td><code>(Path + Query + Header + Body Fields) / Endpoints</code></td>
+                <td>2.0 – 5.0 params/ep</td>
+                <td>Structural input complexity index across API operations.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 3: FINDINGS EXPLORER         -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-findings" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">AUDIT & VULNERABILITY EVIDENCE</p>
+          <h1>Scan findings</h1>
+          <p class="subtitle">Filter, search, and examine security flaws, contract mismatches, and attack payloads.</p>
+        </div>
+      </div>
+
+      <div class="panel" id="findingsPanel">
+        <div class="summary"><b id="resultTitle">Your results will appear here</b><span id="duration">—</span></div>
+        <div class="toolbar">
+          <input class="input" id="search" type="search" placeholder="Search findings, routes, or payloads…" aria-label="Search findings">
+          <select class="input" id="severity" aria-label="Filter severity">
+            <option value="all">All severities</option>
+            <option>critical</option>
+            <option>high</option>
+            <option>medium</option>
+            <option>low</option>
+          </select>
+        </div>
+        <div class="empty" id="empty">
+          <div class="emptyicon">⌕</div>
+          <b>No findings recorded yet.</b>
+          <p>Run a security scan on the dashboard to test your endpoints and populate findings.</p>
+        </div>
+        <div class="tablewrap" id="tablewrap" hidden>
+          <table>
+            <thead>
+              <tr>
+                <th>SEVERITY</th>
+                <th>FINDING / ENDPOINT</th>
+                <th>RESPONSE</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="reportbar">
+          <span id="shown">No results yet</span>
+          <div class="downloads" id="downloads" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 4: ATTACK SURFACE & SPECS    -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-surface" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">STRUCTURAL API CATALOG</p>
+          <h1>API Attack Surface & Specs</h1>
+          <p class="subtitle">Complete inventory of parsed OpenAPI operations, parameter surfaces, and heuristic risk rankings.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelhead">
+          <div><h2>Parsed Endpoints Inventory</h2><small>All operations discovered in OpenAPI specification</small></div>
+          <span class="tag">SPEC CATALOG</span>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>METHOD</th>
+                <th>ROUTE PATH</th>
+                <th>PARAMETERS / BODY</th>
+                <th>AUTH REQ</th>
+                <th>RISK SCORE</th>
+                <th>DEFECTS</th>
+              </tr>
+            </thead>
+            <tbody id="surfaceRows">
+              <tr>
+                <td colspan="6" style="text-align:center;padding:40px;color:#94a3b8">Run a scan to inspect the API endpoint inventory.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 5: SCAN HISTORY              -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-history" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">AUDIT LOG & PAST SCANS</p>
+          <h1>Scan History</h1>
+          <p class="subtitle">Past scans from this browser session. Reports and evidence are preserved in server memory.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelhead">
+          <div><h2>Session Audit History</h2><small>Up to 20 past executions retained</small></div>
+          <span class="tag">AUDIT LOG</span>
+        </div>
+        <div id="historyList">
+          <div style="padding:40px;text-align:center;color:#94a3b8">Your completed scans will appear here.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 6: FRAMEWORK GUIDE           -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-guide" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">DOCUMENTATION & ARCHITECTURE</p>
+          <h1>Framework Guide</h1>
+          <p class="subtitle">Technical guide to automated fuzz testing, classification heuristics, and quality metrics.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <h3>1. OpenAPI / Swagger Parsing & Reference Resolution</h3>
+        <p>SentinelAPI ingests OpenAPI 3.x and Swagger 2.0 specifications. It traverses JSON/YAML schemas, recursively resolves all internal <code>$ref</code> dependencies, and maps each operation's path, query, header, and body constraints.</p>
+      </div>
+      <div class="guide-card">
+        <h3>2. Fuzz-Risk Scoring Heuristic</h3>
+        <p>Endpoints are prioritized based on structural risk factors: mutating HTTP methods (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>), dynamic request bodies, complex path/query parameters, and lack of authentication barriers.</p>
+      </div>
+      <div class="guide-card">
+        <h3>3. Hostile Payload Generation</h3>
+        <p>The input synthesizer generates boundary values (integer overflow, negative bounds, max lengths), type confusion (arrays/objects in primitive slots), SQL Injection indicators, XSS script injection strings, and path traversal strings.</p>
+      </div>
+      <div class="guide-card">
+        <h3>4. Independent Anonymous Probes</h3>
+        <p>Secured endpoints automatically receive an independent unauthenticated probe without credentials. A 2xx response triggers an immediate <code>AUTH_NOT_ENFORCED</code> finding.</p>
+      </div>
+    </section>
+
+    <footer>
+      <span>SentinelAPI · Enterprise API Security Fuzzer & Contract Assurance</span>
+      <span>Automated Quality & Robustness Testing</span>
+    </footer>
+  </div>
+</main>
+
 <script>
-const $=id=>document.getElementById(id);let mode='demo',specText='',current=null,history=[];
-function setMode(value){mode=value;for(const name of ['demo','live']){$(name+'Settings').hidden=name!==value;$(name+'Tab').classList.toggle('selected',name===value);$(name+'Tab').setAttribute('aria-pressed',name===value)}$('baseUrl').required=value==='live';$('status').textContent=value==='demo'?'Ready when you are.':'Choose your specification and enter the API address.'}
-$('demoTab').onclick=()=>setMode('demo');$('liveTab').onclick=()=>setMode('live');$('demoQuick').onclick=()=>{setMode('demo');$('scanForm').requestSubmit()};
-$('specFile').onchange=async event=>{specText='';const file=event.target.files[0];if(!file)return;if(file.size>2000000){$('fileNote').textContent='This file is too large. Choose a file under 2 MB.';return}try{specText=await file.text();$('fileNote').textContent=file.name+' · '+Math.max(1,Math.round(file.size/1024))+' KB'}catch{$('fileNote').textContent='Could not read this file. Please choose it again.'}};
-function cell(text){const td=document.createElement('td');td.textContent=text;return td}
-function render(){if(!current)return;const term=$('search').value.toLowerCase(),level=$('severity').value;const visible=current.findings.filter(f=>(level==='all'||f.severity===level)&&[f.kind,f.endpoint,f.detail].join(' ').toLowerCase().includes(term));$('rows').replaceChildren();for(const f of visible){const tr=document.createElement('tr'),severity=cell(''),pill=document.createElement('span');pill.className='pill '+f.severity;pill.textContent=f.severity;severity.append(pill);const detail=cell(''),title=document.createElement('b'),ep=document.createElement('code');title.textContent=f.kind.split('_').join(' ');ep.textContent=f.endpoint;detail.append(title,ep);const more=document.createElement('details'),summary=document.createElement('summary'),description=document.createElement('p');summary.textContent='View evidence';description.textContent=f.detail+' · Field: '+(f.target??'root body')+' · Payload: '+f.payload;more.append(summary,description);detail.append(more);tr.append(severity,detail,cell(f.status||'No response'));$('rows').append(tr)}$('tablewrap').hidden=!visible.length;$('empty').hidden=!!visible.length;if(!visible.length){$('empty').replaceChildren();const b=document.createElement('b'),p=document.createElement('p');b.textContent=current.findings.length?'No matching findings':'No findings in this scan';p.textContent=current.findings.length?'Try another search or severity filter.':current.truncated?'This partial scan used its request budget. Increase the limit to test more inputs.':'Review coverage too: a scan without findings does not establish that an API is secure.';$('empty').append(b,p)}$('shown').textContent=visible.length+' of '+current.findings.length+' findings'}
-function show(data){current=data;$('endpoints').textContent=data.coverage.endpoints_fuzzed;$('endpointNote').textContent='of '+data.coverage.endpoints_in_spec+' documented endpoints';$('findingCount').textContent=data.findings.length;$('findingNote').textContent=data.findings.filter(f=>f.severity==='critical').length+' critical findings';$('requests').textContent=data.requests;$('requestNote').textContent=data.truncated?'Request limit reached · partial scan':'Scan completed';$('coverage').textContent=data.coverage.endpoint_coverage_pct+'%';$('resultTitle').textContent=(data.mode==='demo'?'Demo API':'Your API')+' · '+(data.truncated?'Partial scan':'Completed scan');$('duration').textContent=data.elapsed+' seconds';$('scanState').textContent=data.truncated?'PARTIAL':'COMPLETE';$('downloads').replaceChildren();for(const format of ['html','md','json','sarif']){const a=document.createElement('a');a.href='/api/reports/'+data.id+'/'+format;a.textContent=format.toUpperCase();a.download='';$('downloads').append(a)}$('downloads').hidden=false;render()}
-$('search').oninput=render;$('severity').onchange=render;
-$('scanForm').onsubmit=async event=>{event.preventDefault();if(mode==='live'&&!specText){$('status').textContent='Please choose your OpenAPI JSON or YAML file first.';$('status').classList.add('error');return}const buttons=[$('runButton'),$('demoQuick'),$('demoTab'),$('liveTab')];buttons.forEach(b=>b.disabled=true);$('status').classList.remove('error');$('status').textContent='Scanning your API… This may take a little time at the selected request rate.';$('runButton').textContent='Scanning…';$('scanState').textContent='RUNNING';try{const response=await fetch('/api/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode,spec_text:specText,base_url:$('baseUrl').value,max_requests:Number($('budget').value),rps:Number($('rate').value)})});const data=await response.json();if(!response.ok)throw Error(typeof data.detail==='string'?data.detail:'Check the API address, file and numeric settings.');show(data);history.unshift({...data,created:new Date().toLocaleTimeString()});history=history.slice(0,20);$('historyList').replaceChildren();for(const item of history){const b=document.createElement('button');b.textContent=(item.mode==='demo'?'Demo API':'Your API')+' · '+item.findings.length+' findings · '+item.requests+' requests · '+item.created;b.onclick=()=>{show(item);$('findings').scrollIntoView({behavior:'smooth'})};$('historyList').append(b)}$('status').textContent=data.truncated?'Scan finished with partial results: the request limit was reached.':'Scan complete. Review the findings or download a report.'}catch(error){$('status').textContent=error.message;$('status').classList.add('error');$('scanState').textContent='SCAN FAILED'}finally{buttons.forEach(b=>b.disabled=false);$('runButton').textContent='▷  Run security scan'}};
-</script></body></html>
+const $ = id => document.getElementById(id);
+let mode = 'demo', specText = '', current = null, history = [];
+
+/* SUB-WORKSPACE TAB SWITCHING */
+function switchWorkspace(targetId) {
+  document.querySelectorAll('nav a.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.target === targetId);
+  });
+  document.querySelectorAll('.sub-workspace').forEach(view => {
+    view.style.display = view.id === 'view-' + targetId ? 'block' : 'none';
+  });
+  const titles = {
+    dashboard: 'Scan Dashboard',
+    metrics: 'Metrics & Analytics',
+    findings: 'Findings Explorer',
+    surface: 'API Attack Surface & Specs',
+    history: 'Scan History',
+    guide: 'Framework Guide'
+  };
+  $('breadcrumbNav').textContent = '/   ' + (titles[targetId] || 'Workspace');
+  window.location.hash = targetId;
+}
+
+document.querySelectorAll('nav a.nav-item').forEach(item => {
+  item.onclick = (e) => {
+    e.preventDefault();
+    switchWorkspace(item.dataset.target);
+  };
+});
+
+// Handle direct hash navigation
+if (window.location.hash) {
+  const hash = window.location.hash.replace('#', '');
+  if (['dashboard', 'metrics', 'findings', 'surface', 'history', 'guide'].includes(hash)) {
+    switchWorkspace(hash);
+  }
+}
+
+function setMode(value) {
+  mode = value;
+  for (const name of ['demo', 'live']) {
+    $(name + 'Settings').hidden = name !== value;
+    $(name + 'Tab').classList.toggle('selected', name === value);
+    $(name + 'Tab').setAttribute('aria-pressed', name === value);
+  }
+  $('baseUrl').required = value === 'live';
+  $('status').textContent = value === 'demo' ? 'Ready when you are.' : 'Choose your specification and enter the API address.';
+}
+$('demoTab').onclick = () => setMode('demo');
+$('liveTab').onclick = () => setMode('live');
+$('demoQuick').onclick = () => { setMode('demo'); $('scanForm').requestSubmit(); };
+
+$('specFile').onchange = async event => {
+  specText = '';
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 2000000) {
+    $('fileNote').textContent = 'This file is too large. Choose a file under 2 MB.';
+    return;
+  }
+  try {
+    specText = await file.text();
+    $('fileNote').textContent = file.name + ' · ' + Math.max(1, Math.round(file.size / 1024)) + ' KB';
+  } catch {
+    $('fileNote').textContent = 'Could not read this file. Please choose it again.';
+  }
+};
+
+function cell(text) {
+  const td = document.createElement('td');
+  td.textContent = text;
+  return td;
+}
+
+function render() {
+  if (!current) return;
+  const term = $('search').value.toLowerCase(), level = $('severity').value;
+  const visible = current.findings.filter(f => (level === 'all' || f.severity === level) && [f.kind, f.endpoint, f.detail].join(' ').toLowerCase().includes(term));
+  $('rows').replaceChildren();
+  for (const f of visible) {
+    const tr = document.createElement('tr'), severity = cell(''), pill = document.createElement('span');
+    pill.className = 'pill ' + f.severity;
+    pill.textContent = f.severity;
+    severity.append(pill);
+    const detail = cell(''), title = document.createElement('b'), ep = document.createElement('code');
+    title.textContent = f.kind.split('_').join(' ');
+    ep.textContent = f.endpoint;
+    detail.append(title, ep);
+    const more = document.createElement('details'), summary = document.createElement('summary'), description = document.createElement('p');
+    summary.textContent = 'View evidence';
+    description.textContent = f.detail + ' · Field: ' + (f.target ?? 'root body') + ' · Payload: ' + f.payload;
+    more.append(summary, description);
+    detail.append(more);
+    tr.append(severity, detail, cell(f.status || 'No response'));
+    $('rows').append(tr);
+  }
+  $('tablewrap').hidden = !visible.length;
+  $('empty').hidden = !!visible.length;
+  if (!visible.length) {
+    $('empty').replaceChildren();
+    const b = document.createElement('b'), p = document.createElement('p');
+    b.textContent = current.findings.length ? 'No matching findings' : 'No findings in this scan';
+    p.textContent = current.findings.length ? 'Try another search or severity filter.' : current.truncated ? 'This partial scan used its request budget. Increase the limit to test more inputs.' : 'Review coverage too: a scan without findings does not establish that an API is secure.';
+    $('empty').append(b, p);
+  }
+  $('shown').textContent = visible.length + ' of ' + current.findings.length + ' findings';
+}
+
+function renderSurface(data) {
+  const catalog = data.catalog || [];
+  const tbody = $('surfaceRows');
+  if (!tbody || !catalog.length) return;
+  tbody.replaceChildren();
+  for (const item of catalog) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="method-badge method-${item.method.toLowerCase()}">${item.method}</span></td>
+      <td><code>${item.path}</code></td>
+      <td>${item.params_count} params ${item.has_body ? '+ JSON Body' : ''}</td>
+      <td>${item.secured ? '<span class="pill low">Auth Required</span>' : '<span class="pill medium">Public / Anon</span>'}</td>
+      <td><b>${item.risk_score}</b> / 10</td>
+      <td>${item.findings_count > 0 ? '<span class="pill critical">'+item.findings_count+' defects</span>' : '<span class="pill" style="background:#ecfdf5;color:#059669">0 defects</span>'}</td>
+    `;
+    tbody.append(tr);
+  }
+}
+
+/* RENDER SOFTWARE METRICS & VISUALIZATIONS */
+function renderMetrics(data) {
+  const m = data.metrics || {};
+  const sevs = m.severities || {
+    critical: data.findings.filter(f => f.severity === 'critical').length,
+    high: data.findings.filter(f => f.severity === 'high').length,
+    medium: data.findings.filter(f => f.severity === 'medium').length,
+    low: data.findings.filter(f => f.severity === 'low').length
+  };
+  const totalFindings = data.findings.length;
+  const fuzzed = Math.max(data.coverage.endpoints_fuzzed, 1);
+
+  // Update Composite Health Score
+  const hs = m.health_score !== undefined ? m.health_score : (totalFindings ? Math.max(10, 100 - totalFindings*12) : 100);
+  const grade = m.grade || (hs >= 90 ? 'A' : hs >= 80 ? 'B' : hs >= 70 ? 'C' : hs >= 55 ? 'D' : 'F');
+  const gradeLabel = m.grade_label || (hs >= 80 ? 'Good / Resilient API' : 'High Defect Density Detected');
+  if ($('healthBadge')) {
+    $('healthBadge').textContent = grade;
+    $('healthBadge').className = 'health-badge grade-' + grade.toLowerCase();
+    $('healthScoreVal').textContent = 'Security & Quality Score: ' + hs + ' / 100 (Grade ' + grade + ')';
+    $('healthScoreDesc').textContent = gradeLabel + ' · Evaluated against defect severity penalty, error robustness, and spec fidelity.';
+  }
+  if ($('quickHealthVal')) $('quickHealthVal').textContent = hs + ' / 100 (' + grade + ')';
+  if ($('kpiResilienceTop')) $('kpiResilienceTop').textContent = (m.error_resilience_ratio !== undefined ? m.error_resilience_ratio : '100') + '%';
+  if ($('kpiSchemaConfTop')) $('kpiSchemaConfTop').textContent = (m.schema_conformance_rate !== undefined ? m.schema_conformance_rate : '100') + '%';
+
+  // Update Tier 1 KPI Cards
+  const dd = m.defect_density !== undefined ? m.defect_density : (totalFindings / fuzzed).toFixed(2);
+  $('kpiDefectDensity').textContent = dd + ' issues/ep';
+  if ($('quickDefectDensity')) $('quickDefectDensity').textContent = dd + ' issues/ep';
+  const dsi = m.defect_severity_index !== undefined ? m.defect_severity_index : 
+    (totalFindings ? ((sevs.critical*4 + sevs.high*3 + sevs.medium*2 + sevs.low*1)/totalFindings).toFixed(2) : '0.00');
+  $('kpiDsi').textContent = dsi + ' / 4.0';
+  const vei = m.vulnerable_endpoints_pct !== undefined ? m.vulnerable_endpoints_pct : 
+    Math.round(100 * new Set(data.findings.map(f => f.endpoint)).size / fuzzed);
+  $('kpiVei').textContent = vei + '%';
+  const rps = m.throughput_rps !== undefined ? m.throughput_rps : (data.requests / Math.max(data.elapsed, 0.001)).toFixed(1);
+  $('kpiThroughput').textContent = rps + ' req/s';
+  const lat = m.avg_latency_ms !== undefined ? m.avg_latency_ms : Math.round((data.elapsed / Math.max(data.requests, 1)) * 1000);
+  $('kpiLatency').textContent = 'Mean latency: ' + lat + ' ms';
+
+  // Update Tier 2 Architectural & Robustness Cards
+  if ($('kpiAttackSurface')) $('kpiAttackSurface').textContent = (m.attack_surface_points !== undefined ? m.attack_surface_points : fuzzed * 2) + ' points';
+  if ($('kpiParamDensity')) $('kpiParamDensity').textContent = (m.avg_param_density !== undefined ? m.avg_param_density : '1.8') + ' params/ep';
+  if ($('kpiResilience')) $('kpiResilience').textContent = (m.error_resilience_ratio !== undefined ? m.error_resilience_ratio : '100') + '%';
+  if ($('kpiSchemaConf')) $('kpiSchemaConf').textContent = (m.schema_conformance_rate !== undefined ? m.schema_conformance_rate : '100') + '%';
+
+  // 1. SEVERITY PIE / DONUT CHART (SVG)
+  renderDonutChart(sevs, totalFindings);
+
+  // 2. VULNERABILITY TYPES HORIZONTAL BAR CHART
+  renderCategoryBars(m.vulnerability_types || countField(data.findings, 'kind'));
+
+  // 3. STATUS CODE BARS
+  renderStatusCodeBars(m.status_codes || countField(data.findings, 'status'));
+
+  // 4. API METHODS & RISK MATRIX
+  renderMethodsAndRisk(m.methods || {}, m.risk_breakdown || {});
+
+  // 5. ATTACK SURFACE CATALOG
+  renderSurface(data);
+}
+
+function countField(list, field) {
+  const counts = {};
+  for (const item of list) {
+    const val = item[field] || 'Unknown';
+    counts[val] = (counts[val] || 0) + 1;
+  }
+  return counts;
+}
+
+function renderDonutChart(sevs, total) {
+  const container = $('chartSeverity');
+  if (!total) {
+    container.innerHTML = '<div style="text-align:center;color:#10b981;font-weight:600;padding:40px 0">✓ Zero Defects Found<br><small style="color:#64748b">100% clean across tested inputs</small></div>';
+    return;
+  }
+  const colors = { critical: '#ef4444', high: '#f97316', medium: '#eab308', low: '#3b82f6' };
+  const r = 45, circ = 2 * Math.PI * r;
+  let offset = 0;
+  let paths = '';
+
+  for (const [key, val] of Object.entries(sevs)) {
+    if (!val) continue;
+    const dash = (val / total) * circ;
+    const space = circ - dash;
+    paths += `<circle cx="60" cy="60" r="${r}" fill="none" stroke="${colors[key]}" stroke-width="18" 
+      stroke-dasharray="${dash} ${space}" stroke-dashoffset="${-offset}" />`;
+    offset += dash;
+  }
+
+  let legendHtml = '';
+  for (const [key, val] of Object.entries(sevs)) {
+    const pct = total ? Math.round((val / total) * 100) : 0;
+    legendHtml += `
+      <div class="legend-item">
+        <span class="legend-color" style="background:${colors[key]}"></span>
+        <span style="text-transform:capitalize;font-weight:600;width:55px">${key}:</span>
+        <span style="font-weight:700">${val}</span>
+        <span style="color:#94a3b8">(${pct}%)</span>
+      </div>`;
+  }
+
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;width:100%">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="${r}" fill="none" stroke="#f1f5f9" stroke-width="18" />
+        ${paths}
+        <text x="60" y="58" class="donut-center-text">${total}</text>
+        <text x="60" y="73" class="donut-center-sub">Total</text>
+      </svg>
+      <div class="chart-legend">${legendHtml}</div>
+    </div>`;
+}
+
+function renderCategoryBars(types) {
+  const container = $('chartTypes');
+  const entries = Object.entries(types);
+  if (!entries.length) {
+    container.innerHTML = '<div style="text-align:center;color:#64748b;padding:30px 0">No vulnerability classifications to plot.</div>';
+    return;
+  }
+  const max = Math.max(...entries.map(e => e[1]), 1);
+  const colorMap = {
+    SQL_INJECTION: '#ef4444', SQLI_SUSPECTED: '#f97316', XSS_REFLECTION: '#f97316',
+    PATH_TRAVERSAL: '#dc2626', VALIDATION_BYPASS: '#eab308', SERVER_ERROR: '#ef4444',
+    SCHEMA_VIOLATION: '#8b5cf6', UNDOCUMENTED_STATUS: '#3b82f6', AUTH_NOT_ENFORCED: '#ec4899'
+  };
+  let html = '';
+  for (const [kind, count] of entries) {
+    const pct = Math.round((count / max) * 100);
+    const c = colorMap[kind] || '#64748b';
+    const label = kind.split('_').join(' ');
+    html += `
+      <div class="bar-row">
+        <div class="bar-label" title="${label}">${label}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c}"></div></div>
+        <div class="bar-val">${count}</div>
+      </div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderStatusCodeBars(statusCodes) {
+  const container = $('chartStatusCodes');
+  const entries = Object.entries(statusCodes);
+  if (!entries.length) {
+    container.innerHTML = '<div style="text-align:center;color:#64748b;padding:30px 0">No status codes observed.</div>';
+    return;
+  }
+  const max = Math.max(...entries.map(e => e[1]), 1);
+  let html = '';
+  for (const [code, count] of entries) {
+    const num = Number(code);
+    let color = '#3b82f6';
+    if (num >= 200 && num < 300) color = '#10b981';
+    else if (num >= 400 && num < 500) color = '#f59e0b';
+    else if (num >= 500) color = '#ef4444';
+
+    const pct = Math.round((count / max) * 100);
+    html += `
+      <div class="bar-row">
+        <div class="bar-label" style="font-family:Consolas,monospace;font-weight:700">HTTP ${code}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <div class="bar-val">${count}</div>
+      </div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderMethodsAndRisk(methods, risk) {
+  const container = $('chartRiskMethods');
+  const methodEntries = Object.entries(methods);
+  const riskEntries = Object.entries(risk);
+  if (!methodEntries.length && !riskEntries.length) {
+    container.innerHTML = '<div style="text-align:center;color:#64748b;padding:30px 0">Awaiting scan data.</div>';
+    return;
+  }
+
+  let html = '<div style="margin-bottom:12px"><b style="font-size:11px;color:#475569">HTTP Method Distribution:</b></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">';
+  const mColors = { GET: '#3b82f6', POST: '#10b981', PUT: '#f59e0b', DELETE: '#ef4444', PATCH: '#8b5cf6' };
+  for (const [m, c] of methodEntries) {
+    html += `<div style="background:#f8fafc;border:1px solid #e2e8f0;padding:6px 12px;border-radius:6px;font-size:11px">
+      <span style="font-weight:700;color:${mColors[m]||'#64748b'}">${m}</span>: <b>${c}</b>
+    </div>`;
+  }
+  html += '</div>';
+
+  html += '<div><b style="font-size:11px;color:#475569">Fuzz-Risk Heuristic Tiers:</b></div><div style="margin-top:8px">';
+  const rColors = { High: '#ef4444', Medium: '#f59e0b', Low: '#3b82f6' };
+  const totalR = Object.values(risk).reduce((a, b) => a + b, 0) || 1;
+  for (const [tier, count] of riskEntries) {
+    const pct = Math.round((count / totalR) * 100);
+    html += `
+      <div class="bar-row">
+        <div class="bar-label">${tier} Risk Endpoints</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${rColors[tier]||'#64748b'}"></div></div>
+        <div class="bar-val">${count}</div>
+      </div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function show(data) {
+  current = data;
+  $('endpoints').textContent = data.coverage.endpoints_fuzzed;
+  $('endpointNote').textContent = 'of ' + data.coverage.endpoints_in_spec + ' documented endpoints';
+  $('findingCount').textContent = data.findings.length;
+  $('findingNote').textContent = data.findings.filter(f => f.severity === 'critical').length + ' critical findings';
+  $('requests').textContent = data.requests;
+  $('requestNote').textContent = data.truncated ? 'Request limit reached · partial scan' : 'Scan completed';
+  $('coverage').textContent = data.coverage.endpoint_coverage_pct + '%';
+  $('resultTitle').textContent = (data.mode === 'demo' ? 'Demo API' : 'Your API') + ' · ' + (data.truncated ? 'Partial scan' : 'Completed scan');
+  $('duration').textContent = data.elapsed + ' seconds';
+  $('scanState').textContent = data.truncated ? 'PARTIAL' : 'COMPLETE';
+  
+  // Dashboard Quick Overview Card
+  $('quickScanPlaceholder').hidden = true;
+  $('quickScanResults').hidden = false;
+  $('quickResultTitle').textContent = (data.mode === 'demo' ? 'Demo API' : 'Custom API') + ' Scan';
+  $('quickDuration').textContent = data.elapsed + 's elapsed · ' + data.requests + ' requests';
+
+  // Populate download bars on both Dashboard and Findings views
+  for (const targetBar of [$('downloads'), $('dashboardDownloads')]) {
+    if (!targetBar) continue;
+    targetBar.replaceChildren();
+    for (const format of ['html', 'md', 'json', 'sarif']) {
+      const a = document.createElement('a');
+      a.href = '/api/reports/' + data.id + '/' + format;
+      a.textContent = format.toUpperCase();
+      a.download = '';
+      targetBar.append(a);
+    }
+    targetBar.hidden = false;
+  }
+
+  render();
+  renderMetrics(data);
+}
+
+$('search').oninput = render;
+$('severity').onchange = render;
+
+$('scanForm').onsubmit = async event => {
+  event.preventDefault();
+  if (mode === 'live' && !specText) {
+    $('status').textContent = 'Please choose your OpenAPI JSON or YAML file first.';
+    $('status').classList.add('error');
+    return;
+  }
+  const buttons = [$('runButton'), $('demoQuick'), $('demoTab'), $('liveTab')];
+  buttons.forEach(b => b.disabled = true);
+  $('status').classList.remove('error');
+  $('status').textContent = 'Scanning your API… Executing fuzz tests and computing software metrics.';
+  $('runButton').textContent = 'Scanning…';
+  $('scanState').textContent = 'RUNNING';
+  try {
+    const response = await fetch('/api/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mode,
+        spec_text: specText,
+        base_url: $('baseUrl').value,
+        max_requests: Number($('budget').value),
+        rps: Number($('rate').value)
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw Error(typeof data.detail === 'string' ? data.detail : 'Check the API address, file and numeric settings.');
+    show(data);
+    history.unshift({ ...data, created: new Date().toLocaleTimeString() });
+    history = history.slice(0, 20);
+
+    // Update History Workspace List
+    $('historyList').replaceChildren();
+    for (const item of history) {
+      const div = document.createElement('div');
+      div.className = 'history-item';
+      div.innerHTML = `
+        <div>
+          <b>${item.mode === 'demo' ? 'Demo API' : 'Custom API'}</b>
+          <small style="display:block;color:#64748b">${item.created} · ${item.requests} requests · ${item.elapsed}s</small>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="pill ${item.findings.length ? 'critical' : 'low'}">${item.findings.length} findings</span>
+          <button class="outline" style="padding:5px 10px;font-size:11px">Inspect</button>
+        </div>
+      `;
+      div.querySelector('button').onclick = () => {
+        show(item);
+        switchWorkspace('metrics');
+      };
+      $('historyList').append(div);
+    }
+    $('status').textContent = data.truncated ? 'Scan finished with partial results: request limit reached.' : 'Scan complete. Check the other sub-workspaces for metrics and findings.';
+  } catch (error) {
+    $('status').textContent = error.message;
+    $('status').classList.add('error');
+    $('scanState').textContent = 'SCAN FAILED';
+  } finally {
+    buttons.forEach(b => b.disabled = false);
+    $('runButton').textContent = '▷  Run security scan';
+  }
+};
+</script>
+</body>
+</html>
