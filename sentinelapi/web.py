@@ -179,9 +179,24 @@ async def scan(options: Scan):
             "status_codes": dict(status_counts.most_common(8))
         }
 
+        endpoint_catalog = [
+            {
+                "key": ep.key,
+                "method": ep.method.upper(),
+                "path": ep.path,
+                "params_count": len(ep.params),
+                "has_body": bool(ep.body_schema),
+                "secured": ep.secured,
+                "risk_score": fuzz_risk_score(ep),
+                "findings_count": len([f for f in findings if f.endpoint == ep.key])
+            }
+            for ep in eps
+        ]
+
         return {'id': scan_id, 'findings': [f.to_dict() for f in findings],
             'coverage': cov, 'requests': fz.requests, 'elapsed': round(fz.elapsed, 2),
-            'truncated': fz.truncated, 'mode': options.mode, 'metrics': metrics}
+            'truncated': fz.truncated, 'mode': options.mode, 'metrics': metrics,
+            'catalog': endpoint_catalog}
 
 
 @app.get('/api/reports/{scan_id}/{format}')

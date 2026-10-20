@@ -1,56 +1,80 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SentinelAPI · Security & Software Metrics Workspace</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SentinelAPI · Security & Software Metrics Workspace</title>
 <style>
-:root{--ink:#182438;--muted:#748095;--line:#e6ebf2;--blue:#5261e8;--bg:#f5f7fb;--critical:#ef4444;--high:#f97316;--medium:#eab308;--low:#3b82f6;--success:#10b981}
-*{box-sizing:border-box}body{margin:0;font:14px 'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg)}
-button,input,select{font:inherit}button,a,input,select{outline-offset:4px}button{cursor:pointer}
-aside{position:fixed;inset:0 auto 0 0;width:230px;background:#101a2c;color:#9ba9c0;padding:28px 18px;display:flex;flex-direction:column;z-index:10}
-.brand{display:flex;gap:12px;align-items:center;color:white;font-size:20px;font-weight:700;letter-spacing:-.6px}
-.shield{display:grid;place-items:center;width:36px;height:40px;background:#6471f5;color:white;clip-path:polygon(50% 0,100% 16%,90% 74%,50% 100%,10% 74%,0 16%);font-size:20px}
+:root{
+  --ink:#182438;--muted:#748095;--line:#e6ebf2;--blue:#5261e8;--bg:#f5f7fb;
+  --critical:#ef4444;--high:#f97316;--medium:#eab308;--low:#3b82f6;--success:#10b981;
+}
+*{box-sizing:border-box}
+body{margin:0;font:14px 'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit}
+button,a,input,select{outline-offset:4px}
+button{cursor:pointer}
+
+/* SIDEBAR & SUB-WORKSPACES */
+aside{position:fixed;inset:0 auto 0 0;width:236px;background:#101a2c;color:#9ba9c0;padding:26px 16px;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;gap:12px;align-items:center;color:white;font-size:19px;font-weight:700;letter-spacing:-.6px}
+.shield{display:grid;place-items:center;width:34px;height:38px;background:#6471f5;color:white;clip-path:polygon(50% 0,100% 16%,90% 74%,50% 100%,10% 74%,0 16%);font-size:18px}
 .brand small{color:#a9b4c9;font-size:9.5px;display:block;letter-spacing:1.8px;margin-top:3px}
-.navlabel{font-size:10px;letter-spacing:1.8px;margin:35px 12px 12px;color:#5a6882;font-weight:700}
-nav a{display:flex;align-items:center;gap:11px;color:inherit;text-decoration:none;padding:11px 14px;border-radius:7px;margin:4px 0;font-size:13px;transition:all .15s}
-nav a:hover{background:#1b273d;color:#e2e8f0}
-nav a.active{background:#26324f;color:#cbd0ff;border-left:3px solid #818cff}
-nav span{font-size:16px}
+.navlabel{font-size:10px;letter-spacing:1.8px;margin:32px 10px 10px;color:#5a6882;font-weight:700}
+nav{display:flex;flex-direction:column;gap:3px}
+nav a.nav-item{
+  display:flex;align-items:center;gap:11px;color:#9ba9c0;text-decoration:none;padding:11px 14px;
+  border-radius:8px;font-size:12.5px;font-weight:500;transition:all .15s;border-left:3px solid transparent;
+}
+nav a.nav-item:hover{background:#182337;color:#e2e8f0}
+nav a.nav-item.active{background:#232f4b;color:#cbd0ff;border-left-color:#818cff;font-weight:600}
+nav a.nav-item span{font-size:16px}
 .aside-bottom{margin-top:auto;padding:16px 12px 0;border-top:1px solid #232d3f;font-size:11.5px;line-height:1.7}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#40c99b;margin-right:7px}
-main{margin-left:230px}
-header{height:72px;background:white;border-bottom:1px solid var(--line);padding:0 36px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+
+/* MAIN LAYOUT */
+main{margin-left:236px}
+header{height:70px;background:white;border-bottom:1px solid var(--line);padding:0 36px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
 .crumb{color:#27364b;margin-left:8px;font-weight:600}
 .local{background:#eef8f4;color:#328364;padding:6px 11px;border-radius:6px;font-weight:500}
 .avatar{display:inline-grid;place-items:center;background:#ebedfd;color:#5962b3;border-radius:50%;width:32px;height:32px;margin-left:14px;font-weight:600}
-.workspace{max-width:1440px;margin:auto;padding:32px 36px 60px}
-.eyebrow{font-size:10.5px;letter-spacing:2px;color:var(--blue);font-weight:700;margin:0 0 8px}
-h1{font-size:28px;letter-spacing:-.8px;margin:0 0 6px;font-weight:700}
-.subtitle{color:var(--muted);line-height:1.6;margin:0;font-size:13.5px}
-.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.outline{background:white;border:1px solid var(--line);padding:9px 15px;border-radius:7px;color:#47556c;font-weight:600;font-size:12.5px;transition:all .15s}
+.workspace-container{max-width:1440px;margin:auto;padding:30px 36px 60px}
+
+/* SUB-WORKSPACES */
+.sub-workspace{animation:fadeIn .2s ease-in-out}
+@keyframes fadeIn{from{opacity:.3;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.eyebrow{font-size:10.5px;letter-spacing:1.8px;color:var(--blue);font-weight:700;margin:0 0 6px}
+h1{font-size:26px;letter-spacing:-.7px;margin:0 0 5px;font-weight:700}
+.subtitle{color:var(--muted);line-height:1.6;margin:0;font-size:13px}
+.outline{background:white;border:1px solid var(--line);padding:8px 14px;border-radius:7px;color:#47556c;font-weight:600;font-size:12px;transition:all .15s}
 .outline:hover{background:#f8fafc;border-color:#cbd5e1}
 
+/* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
-.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 20px;position:relative;overflow:hidden}
+.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
 .stat-top{display:flex;justify-content:space-between;align-items:center;color:#6d7a90;font-size:12px;font-weight:500}
 .iconbox{background:#f0f2fe;color:var(--blue);border-radius:7px;display:grid;place-items:center;width:28px;height:28px;font-size:15px}
 .stat strong{font-size:28px;letter-spacing:-.8px;display:block;margin:8px 0 4px;font-weight:700}
 .stat small{font-size:11px;color:#8792a3}
 
-.grid{display:grid;grid-template-columns:minmax(330px,.88fr) minmax(440px,1.52fr);gap:22px;align-items:start;margin-bottom:26px}
-.panel{background:white;border:1px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.02)}
-.panelhead{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.panelhead h2{margin:0;font-size:15px;font-weight:700}
-.panelhead small{display:block;margin-top:4px;color:var(--muted);font-size:11px}
+/* PANELS */
+.grid{display:grid;grid-template-columns:minmax(330px,.9fr) minmax(440px,1.5fr);gap:22px;align-items:start;margin-bottom:24px}
+.panel{background:white;border:1px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.02);margin-bottom:20px}
+.panelhead{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panelhead h2{margin:0;font-size:14.5px;font-weight:700}
+.panelhead small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
 .tag{background:#f0f2ff;color:#6470c1;font-size:10px;padding:4px 8px;border-radius:5px;font-weight:600}
-.tag.success{background:#ecfdf5;color:#059669}
 
+/* FORMS */
 .form{padding:20px 22px}
 .tabs{background:#f3f5f9;border-radius:7px;padding:4px;display:flex;margin-bottom:18px}
 .tabs button{flex:1;border:0;color:#7b8799;background:transparent;padding:9px;border-radius:5px;font-size:12px;font-weight:500}
 .tabs button.selected{color:var(--blue);background:white;box-shadow:0 1px 4px #1c2a4010;font-weight:600}
 label{display:block;font-size:12px;font-weight:600;margin:15px 0 6px}
-.demo{padding:16px;background:#f7f8ff;border:1px solid #e2e6fc;border-radius:8px}
+.demo{padding:15px;background:#f7f8ff;border:1px solid #e2e6fc;border-radius:8px}
 .demo b{font-size:12px;color:#4959ae}
-.demo p{font-size:11.5px;color:#71809c;line-height:1.6;margin:7px 0 0}
+.demo p{font-size:11.5px;color:#71809c;line-height:1.6;margin:6px 0 0}
 .demo code{background:#e9edfc;color:#5866ab;padding:3px 6px;border-radius:4px;font-size:11px}
 .input{width:100%;padding:10px 12px;border:1px solid #dce2ed;border-radius:6px;color:#3e4b60;background:white;font-size:12.5px}
 .upload{display:block;padding:22px 14px;border:1px dashed #c8d1e3;text-align:center;background:#fafbfe;border-radius:8px;cursor:pointer}
@@ -59,68 +83,64 @@ label{display:block;font-size:12px;font-weight:600;margin:15px 0 6px}
 .upload input{width:100%;font-size:11px;margin-top:12px}
 .twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .hint{color:#8994a7;font-size:10px;margin:5px 0 0;line-height:1.4}
-.run{width:100%;padding:12px;background:var(--blue);color:white;border:0;border-radius:7px;font-weight:600;font-size:13px;margin-top:20px;box-shadow:0 4px 10px #5261e825;transition:all .15s}
+.run{width:100%;padding:12px;background:var(--blue);color:white;border:0;border-radius:7px;font-weight:600;font-size:13px;margin-top:18px;box-shadow:0 4px 10px #5261e825;transition:all .15s}
 .run:hover{background:#4351d6}
 .run:disabled{opacity:.6;cursor:wait}
 .notice{font-size:10px;color:#8792a3;text-align:center;line-height:1.5;margin:9px 0 0}
 .status{margin-top:14px;font-size:12px;line-height:1.6;color:#657187}
 .error{color:#b93847;font-weight:600}
 
-.summary{padding:15px 22px;background:#fcfdff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+/* TABLES & FINDINGS */
+.summary{padding:14px 22px;background:#fcfdff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
 .summary b{color:#4f617b}
-.toolbar{display:flex;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line)}
+.toolbar{display:flex;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:white}
 .toolbar input{flex:1;min-width:0}
 .toolbar select{width:125px}
-.tablewrap{overflow:auto;max-height:480px}
+.tablewrap{overflow:auto;max-height:550px}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{text-align:left;background:#fafbfe;padding:11px 18px;font-size:10px;color:#8791a4;letter-spacing:.5px;font-weight:700}
-td{padding:14px 18px;border-top:1px solid #edf0f6;vertical-align:top}
+td{padding:13px 18px;border-top:1px solid #edf0f6;vertical-align:top}
 td b{display:block;font-size:12px;font-weight:600;margin-bottom:4px}
 td small{font-size:10px;color:#8290a5}
 td code{font:11px Consolas,monospace;color:#607089;background:#f1f4f9;padding:2px 5px;border-radius:4px}
-.pill{font-size:10px;font-weight:700;border-radius:5px;padding:4px 8px;display:inline-block;text-transform:capitalize}
+.pill{font-size:10px;font-weight:700;border-radius:5px;padding:3px 7px;display:inline-block;text-transform:capitalize}
 .critical{background:#fee2e2;color:#b91c1c}
 .high{background:#ffedd5;color:#c2410c}
 .medium{background:#fef9c3;color:#a16207}
 .low{background:#dbeafe;color:#1d4ed8}
+.method-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;font-family:Consolas,monospace}
+.method-get{background:#e0f2fe;color:#0369a1}
+.method-post{background:#dcfce7;color:#15803d}
+.method-put{background:#fef3c7;color:#b45309}
+.method-delete{background:#fee2e2;color:#b91c1c}
+.method-patch{background:#f3e8ff;color:#7e22ce}
+
 .empty{text-align:center;padding:50px 25px;color:#7d8ba3}
 .empty .emptyicon{display:grid;place-items:center;margin:0 auto 16px;background:#f1f3ff;border-radius:14px;width:52px;height:52px;font-size:24px;color:var(--blue)}
 .empty b{display:block;font-size:14px;color:#4b5c76;margin-bottom:8px}
 .empty p{font-size:12px;line-height:1.7;margin:0}
-.reportbar{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:10px}
+.reportbar{padding:14px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:10px;background:#fafbfe}
 .downloads{display:flex;gap:6px;flex-wrap:wrap}
 .downloads a{font-size:10.5px;text-decoration:none;color:var(--blue);border:1px solid #e2e6fc;padding:5px 8px;border-radius:4px;font-weight:600;background:#fafbff}
 .downloads a:hover{background:#eff2fe}
 
-/* SOFTWARE METRICS VISUALIZATIONS SECTION */
-.metrics-section{margin-bottom:28px}
-.sec-title{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 16px}
-.sec-title h2{font-size:18px;margin:0;font-weight:700;letter-spacing:-.4px}
-.sec-title span{font-size:11px;color:var(--muted)}
-.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:20px}
-.chart-card{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
-.chart-card h3{margin:0 0 4px;font-size:13.5px;font-weight:700}
-.chart-card p{margin:0 0 14px;font-size:11px;color:var(--muted)}
-.chart-wrap{min-height:180px;display:flex;align-items:center;justify-content:center}
-
-/* Health Score Banner */
-.health-banner{background:white;border:1px solid var(--line);border-radius:11px;padding:18px 24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.02)}
+/* SOFTWARE METRICS SCORECARD & KPIS */
+.health-banner{background:white;border:1px solid var(--line);border-radius:11px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.02)}
 .health-left{display:flex;align-items:center;gap:18px}
-.health-badge{display:grid;place-items:center;width:60px;height:60px;border-radius:12px;background:#f0fdf4;border:2px solid #86efac;color:#16a34a;font-size:28px;font-weight:800;flex-shrink:0}
+.health-badge{display:grid;place-items:center;width:62px;height:62px;border-radius:12px;background:#f0fdf4;border:2px solid #86efac;color:#16a34a;font-size:28px;font-weight:800;flex-shrink:0}
 .health-badge.grade-a{background:#f0fdf4;border-color:#86efac;color:#16a34a}
 .health-badge.grade-b{background:#eff6ff;border-color:#93c5fd;color:#2563eb}
 .health-badge.grade-c{background:#fefce8;border-color:#fde047;color:#ca8a04}
 .health-badge.grade-d{background:#fff7ed;border-color:#fdba74;color:#ea580c}
 .health-badge.grade-f{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
-.health-title{margin:0 0 4px;font-size:15px;font-weight:700}
-.health-desc{margin:0;font-size:11.5px;color:var(--muted)}
+.health-title{margin:0 0 4px;font-size:16px;font-weight:700}
+.health-desc{margin:0;font-size:12px;color:var(--muted)}
 .health-stats{display:flex;gap:24px}
 .health-stat-item{text-align:right}
 .health-stat-item small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.health-stat-item strong{font-size:18px;font-weight:700;color:var(--ink)}
+.health-stat-item strong{font-size:19px;font-weight:700;color:var(--ink)}
 
-/* Metrics KPI Strip */
-.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
 .kpi-box{background:white;border:1px solid var(--line);border-radius:9px;padding:14px 16px;border-left:4px solid var(--blue)}
 .kpi-box.purple{border-left-color:#8b5cf6}
 .kpi-box.amber{border-left-color:#f59e0b}
@@ -131,13 +151,13 @@ td code{font:11px Consolas,monospace;color:#607089;background:#f1f4f9;padding:2p
 .kpi-box strong{font-size:22px;display:block;margin:4px 0 2px;font-weight:700;color:var(--ink)}
 .kpi-box span{font-size:10.5px;color:#9ca3af}
 
-/* Metrics Dictionary Table */
-.dict-table{width:100%;border-collapse:collapse;font-size:11.5px}
-.dict-table th{background:#fafbfe;padding:10px 16px;font-size:10px;color:#64748b;letter-spacing:.5px;text-align:left;font-weight:700}
-.dict-table td{padding:11px 16px;border-top:1px solid #f1f5f9;color:#334155}
-.dict-table code{font-family:Consolas,monospace;background:#f1f5f9;padding:2px 5px;border-radius:3px;color:#475569;font-size:11px}
+/* CHARTS GRID */
+.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:22px}
+.chart-card{background:white;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.chart-card h3{margin:0 0 4px;font-size:13.5px;font-weight:700}
+.chart-card p{margin:0 0 14px;font-size:11px;color:var(--muted)}
+.chart-wrap{min-height:180px;display:flex;align-items:center;justify-content:center}
 
-/* SVG Chart Elements */
 .donut-center-text{font-size:20px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
 .donut-center-sub{font-size:9px;fill:#64748b;text-anchor:middle}
 .chart-legend{display:flex;flex-direction:column;gap:8px;margin-left:18px;font-size:11px}
@@ -149,197 +169,225 @@ td code{font:11px Consolas,monospace;color:#607089;background:#f1f4f9;padding:2p
 .bar-fill{height:100%;border-radius:6px;transition:width .4s ease}
 .bar-val{width:32px;text-align:right;font-weight:700;color:#1e293b}
 
-/* Team Evaluation Rubric Section */
-.team-table td{padding:12px 16px;font-size:11.5px}
-.team-table th{padding:10px 16px;font-size:10.5px}
-.team-badge{font-size:10px;font-weight:700;padding:3px 7px;border-radius:4px;background:#f0f2fe;color:var(--blue)}
+.dict-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.dict-table th{background:#fafbfe;padding:10px 16px;font-size:10px;color:#64748b;letter-spacing:.5px;text-align:left;font-weight:700}
+.dict-table td{padding:11px 16px;border-top:1px solid #f1f5f9;color:#334155}
+.dict-table code{font-family:Consolas,monospace;background:#f1f5f9;padding:2px 5px;border-radius:3px;color:#475569;font-size:11px}
 
-.history{margin-top:22px}
-.history button{border:0;background:#f8fafc;text-align:left;color:#475569;padding:11px 14px;border-radius:6px;margin:4px;width:calc(100% - 8px);font-size:11.5px;border:1px solid #f1f5f9}
-.history button:hover{background:#eff3f8;border-color:#e2e8f0}
-footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;font-size:10.5px}
+/* HISTORY & GUIDES */
+.history-item{padding:14px 18px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.history-item:hover{background:#fafbfe}
+.guide-card{background:white;border:1px solid var(--line);border-radius:9px;padding:18px 22px;margin-bottom:16px}
+.guide-card h3{margin:0 0 6px;font-size:14px;color:var(--ink)}
+.guide-card p{margin:0 0 10px;font-size:12px;color:#64748b;line-height:1.7}
+
+footer{display:flex;justify-content:space-between;margin-top:28px;color:#94a3b8;font-size:10.5px}
+[hidden]{display:none!important}
 
 @media(max-width:1100px){
-  aside{width:190px}main{margin-left:190px}.workspace{padding:24px 20px}
+  aside{width:195px}main{margin-left:195px}.workspace-container{padding:24px 20px}
   .grid{grid-template-columns:1fr}.stats,.kpi-strip{grid-template-columns:1fr 1fr}
   .charts-grid{grid-template-columns:1fr}
 }
 @media(max-width:650px){
-  aside{display:none}main{margin-left:0}.workspace{padding:18px 14px}
+  aside{display:none}main{margin-left:0}.workspace-container{padding:16px}
   .stats,.kpi-strip{grid-template-columns:1fr}
 }
-</style></head>
+</style>
+</head>
 <body>
+
+<!-- SIDEBAR NAVIGATION -->
 <aside>
   <div class="brand"><div class="shield">S</div><div>SentinelAPI<small>SECURITY WORKSPACE</small></div></div>
-  <div class="navlabel">WORKSPACE</div>
-  <nav>
-    <a class="active" href="#dashboard"><span>▦</span> Scan dashboard</a>
-    <a href="#metrics"><span>📊</span> Metrics & Analytics</a>
-    <a href="#findings"><span>◎</span> Findings</a>
-    <a href="#history"><span>◷</span> Scan history</a>
+  <div class="navlabel">SUB-WORKSPACES</div>
+  <nav id="navMenu">
+    <a class="nav-item active" data-target="dashboard" href="#dashboard"><span>▦</span> Scan Dashboard</a>
+    <a class="nav-item" data-target="metrics" href="#metrics"><span>📊</span> Metrics & Analytics</a>
+    <a class="nav-item" data-target="findings" href="#findings"><span>◎</span> Findings Explorer</a>
+    <a class="nav-item" data-target="surface" href="#surface"><span>🗺️</span> Attack Surface & Specs</a>
+    <a class="nav-item" data-target="history" href="#history"><span>◷</span> Scan History</a>
+    <a class="nav-item" data-target="guide" href="#guide"><span>▤</span> Framework Guide</a>
   </nav>
   <div class="aside-bottom">
     <span class="dot"></span>Local engine<br>SentinelAPI · v1.0<br>
-    <span style="color:#63738d">Your API. Your workspace.</span>
+    <span style="color:#63738d">Enterprise API Quality Workspace</span>
   </div>
 </aside>
 
-<main id="dashboard">
+<main>
+  <!-- TOP APPLICATION HEADER -->
   <header>
-    <div>Workspace <span class="crumb">/ &nbsp; Security & Analytics</span></div>
-    <div><span class="local"><span class="dot"></span>Local workspace</span><span class="avatar">SA</span></div>
+    <div>Workspace <span class="crumb" id="breadcrumbNav">/ &nbsp; Scan Dashboard</span></div>
+    <div><span class="local"><span class="dot"></span>Local Workspace</span><span class="avatar">SA</span></div>
   </header>
 
-  <div class="workspace">
-    <div class="heading">
-      <div>
-        <p class="eyebrow">API SECURITY & CONTRACT TESTING</p>
-        <h1>API Contract Testing & Security Metrics</h1>
-        <p class="subtitle">Measure defect density, contract compliance, vulnerability exposure, and fuzz-risk metrics across OpenAPI endpoints.</p>
-      </div>
-      <button class="outline" id="demoQuick">↗ &nbsp; Try the demo</button>
-    </div>
+  <div class="workspace-container">
 
-    <!-- PRIMARY STATS STRIP -->
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-top">Endpoints tested<span class="iconbox">⌘</span></div>
-        <strong id="endpoints">—</strong>
-        <small id="endpointNote">Waiting for your first scan</small>
-      </div>
-      <div class="stat">
-        <div class="stat-top">Total findings<span class="iconbox">◎</span></div>
-        <strong id="findingCount">—</strong>
-        <small id="findingNote">Potential issues to review</small>
-      </div>
-      <div class="stat">
-        <div class="stat-top">Requests sent<span class="iconbox">↗</span></div>
-        <strong id="requests">—</strong>
-        <small id="requestNote">Controlled by your request limit</small>
-      </div>
-      <div class="stat">
-        <div class="stat-top">Endpoint coverage<span class="iconbox">◴</span></div>
-        <strong id="coverage">—</strong>
-        <small>Endpoints reached / total spec</small>
-      </div>
-    </div>
-
-    <!-- SCANNER CONFIG & FINDINGS GRID -->
-    <div class="grid">
-      <!-- CONFIG PANEL -->
-      <section class="panel">
-        <div class="panelhead">
-          <div><h2>Configure a scan</h2><small>Select target and fuzzing constraints</small></div>
-          <span class="tag">NEW SCAN</span>
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 1: SCAN DASHBOARD            -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-dashboard">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">AUTOMATED API SECURITY FUZZER & AUDIT</p>
+          <h1>Scan Dashboard</h1>
+          <p class="subtitle">Launch fuzz tests, examine API operations, and configure concurrency constraints.</p>
         </div>
-        <form class="form" id="scanForm">
-          <div class="tabs" role="group" aria-label="Scan mode">
-            <button type="button" class="selected" id="demoTab" aria-pressed="true">Bundled demo</button>
-            <button type="button" id="liveTab" aria-pressed="false">Your API</button>
-          </div>
-          <div id="demoSettings">
-            <div class="demo">
-              <b>◈ &nbsp; Practice target (FastAPI)</b>
-              <p>Runs the deliberately vulnerable demo target in-process with SQLi, XSS, and validation flaws.</p>
-              <p><code>demo_api:app</code> &nbsp; Zero configuration needed</p>
-            </div>
-          </div>
-          <div id="liveSettings" hidden>
-            <label for="baseUrl">API base URL</label>
-            <input class="input" type="url" id="baseUrl" value="http://127.0.0.1:8000" placeholder="http://127.0.0.1:8000">
-            <p class="hint">Use your local or private test API.</p>
-            <label class="upload" for="specFile">
-              <strong>↑ &nbsp; Choose your OpenAPI specification</strong>
-              <small>JSON or YAML · up to 2 MB (e.g. my_openapi.json)</small>
-              <input type="file" id="specFile" accept=".json,.yaml,.yml">
-              <small id="fileNote"></small>
-            </label>
-          </div>
-          <div class="twocol">
-            <div>
-              <label for="budget">Request limit</label>
-              <input class="input" type="number" id="budget" min="0" max="2000" value="150" required>
-              <p class="hint">Maximum requests sent</p>
-            </div>
-            <div>
-              <label for="rate">Requests / second</label>
-              <input class="input" type="number" id="rate" min="1" max="100" value="20" required>
-              <p class="hint">Keep load predictable</p>
-            </div>
-          </div>
-          <button class="run" id="runButton" type="submit">▷ &nbsp; Run security scan</button>
-          <p class="notice">Scan APIs you own or have permission to test.</p>
-          <div class="status" id="status" role="status" aria-live="polite">Ready when you are.</div>
-        </form>
-      </section>
+        <button class="outline" id="demoQuick">↗ &nbsp; Quick demo scan</button>
+      </div>
 
-      <!-- RESULTS / FINDINGS TABLE -->
-      <div class="results">
-        <section class="panel" id="findings">
+      <!-- TOP 4 STATS -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-top">Endpoints tested<span class="iconbox">⌘</span></div>
+          <strong id="endpoints">—</strong>
+          <small id="endpointNote">Waiting for your first scan</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top">Total findings<span class="iconbox">◎</span></div>
+          <strong id="findingCount">—</strong>
+          <small id="findingNote">Potential issues to review</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top">Requests sent<span class="iconbox">↗</span></div>
+          <strong id="requests">—</strong>
+          <small id="requestNote">Controlled by your request limit</small>
+        </div>
+        <div class="stat">
+          <div class="stat-top">Endpoint coverage<span class="iconbox">◴</span></div>
+          <strong id="coverage">—</strong>
+          <small>Endpoints reached / total spec</small>
+        </div>
+      </div>
+
+      <!-- CONFIG PANEL + SUMMARY PREVIEW -->
+      <div class="grid">
+        <section class="panel">
           <div class="panelhead">
-            <div><h2>Scan findings</h2><small>Detailed vulnerability audit</small></div>
-            <span class="tag" id="scanState">AWAITING SCAN</span>
+            <div><h2>Configure a scan</h2><small>Select target and fuzzing constraints</small></div>
+            <span class="tag">TARGET CONFIG</span>
           </div>
-          <div class="summary"><b id="resultTitle">Your results will appear here</b><span id="duration">—</span></div>
-          <div class="toolbar">
-            <input class="input" id="search" type="search" placeholder="Search findings or endpoints…" aria-label="Search findings">
-            <select class="input" id="severity" aria-label="Filter severity">
-              <option value="all">All severities</option>
-              <option>critical</option>
-              <option>high</option>
-              <option>medium</option>
-              <option>low</option>
-            </select>
-          </div>
-          <div class="empty" id="empty">
-            <div class="emptyicon">⌕</div>
-            <b>A good place to start.</b>
-            <p>Run the bundled demo or your API to see vulnerability findings and populate metrics charts.</p>
-          </div>
-          <div class="tablewrap" id="tablewrap" hidden>
-            <table>
-              <thead>
-                <tr>
-                  <th>SEVERITY</th>
-                  <th>FINDING / ENDPOINT</th>
-                  <th>RESPONSE</th>
-                </tr>
-              </thead>
-              <tbody id="rows"></tbody>
-            </table>
-          </div>
-          <div class="reportbar">
-            <span id="shown">No results yet</span>
-            <div class="downloads" id="downloads" hidden></div>
-          </div>
+          <form class="form" id="scanForm">
+            <div class="tabs" role="group" aria-label="Scan mode">
+              <button type="button" class="selected" id="demoTab" aria-pressed="true">Bundled demo</button>
+              <button type="button" id="liveTab" aria-pressed="false">Your API</button>
+            </div>
+            <div id="demoSettings">
+              <div class="demo">
+                <b>◈ &nbsp; Practice target (FastAPI)</b>
+                <p>Runs the deliberately vulnerable demo target in-process with SQLi, XSS, and validation flaws.</p>
+                <p><code>demo_api:app</code> &nbsp; Zero configuration needed</p>
+              </div>
+            </div>
+            <div id="liveSettings" hidden>
+              <label for="baseUrl">API base URL</label>
+              <input class="input" type="url" id="baseUrl" value="http://127.0.0.1:8000" placeholder="http://127.0.0.1:8000">
+              <p class="hint">Use your local or private test API.</p>
+              <label class="upload" for="specFile">
+                <strong>↑ &nbsp; Choose your OpenAPI specification</strong>
+                <small>JSON or YAML · up to 2 MB (e.g. my_openapi.json)</small>
+                <input type="file" id="specFile" accept=".json,.yaml,.yml">
+                <small id="fileNote"></small>
+              </label>
+            </div>
+            <div class="twocol">
+              <div>
+                <label for="budget">Request limit</label>
+                <input class="input" type="number" id="budget" min="0" max="2000" value="150" required>
+                <p class="hint">Maximum requests sent</p>
+              </div>
+              <div>
+                <label for="rate">Requests / second</label>
+                <input class="input" type="number" id="rate" min="1" max="100" value="20" required>
+                <p class="hint">Keep load predictable</p>
+              </div>
+            </div>
+            <button class="run" id="runButton" type="submit">▷ &nbsp; Run security scan</button>
+            <p class="notice">Scan APIs you own or have permission to test.</p>
+            <div class="status" id="status" role="status" aria-live="polite">Ready when you are.</div>
+          </form>
         </section>
-      </div>
-    </div>
 
-    <!-- SECTION: SOFTWARE METRICS & VISUAL ANALYTICS -->
-    <section class="metrics-section" id="metrics">
-      <div class="sec-title">
-        <h2>Software Metrics & Visualization Suite</h2>
-        <span>Computed dynamically across ISO/IEC 25010 Quality & Security Models</span>
+        <!-- DASHBOARD RIGHT SIDE: QUICK OVERVIEW -->
+        <div>
+          <section class="panel">
+            <div class="panelhead">
+              <div><h2>Active Scan Status</h2><small>Real-time execution overview</small></div>
+              <span class="tag" id="scanState">AWAITING SCAN</span>
+            </div>
+            <div style="padding:22px">
+              <div id="quickScanPlaceholder" style="text-align:center;padding:36px 20px;color:#7c8ba3">
+                <div style="font-size:28px;margin-bottom:10px">🚀</div>
+                <b>No scan running</b>
+                <p style="font-size:12px;margin:8px 0 0;line-height:1.6">Launch a scan from the left panel to test endpoints, measure coverage, and compute in-depth metrics.</p>
+              </div>
+              <div id="quickScanResults" hidden>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                  <b id="quickResultTitle" style="font-size:14px;color:#1e293b">—</b>
+                  <span id="quickDuration" style="font-size:12px;color:var(--muted)">—</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+                  <div style="background:#f8fafc;padding:12px 14px;border-radius:8px;border:1px solid #e2e8f0">
+                    <small style="color:#64748b;font-size:10px;text-transform:uppercase;font-weight:700">Health Score</small>
+                    <strong id="quickHealthVal" style="display:block;font-size:20px;color:var(--ink);margin-top:2px">—</strong>
+                  </div>
+                  <div style="background:#f8fafc;padding:12px 14px;border-radius:8px;border:1px solid #e2e8f0">
+                    <small style="color:#64748b;font-size:10px;text-transform:uppercase;font-weight:700">Defect Density</small>
+                    <strong id="quickDefectDensity" style="display:block;font-size:20px;color:var(--ink);margin-top:2px">—</strong>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <button class="outline" style="flex:1" onclick="switchWorkspace('metrics')">📊 View Full Metrics</button>
+                  <button class="outline" style="flex:1" onclick="switchWorkspace('findings')">◎ View Findings</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panelhead">
+              <div><h2>Download Reports</h2><small>Export artifacts in multiple standard formats</small></div>
+              <span class="tag">EXPORT</span>
+            </div>
+            <div style="padding:18px 22px">
+              <div class="downloads" id="dashboardDownloads" style="display:flex;gap:8px">
+                <span style="color:#94a3b8;font-size:11.5px">Reports will be available after a scan completes.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 2: METRICS & ANALYTICS       -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-metrics" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">QUALITY ASSURANCE & RELIABILITY MODEL</p>
+          <h1>Metrics & Analytics</h1>
+          <p class="subtitle">Quantitative metrics evaluating defect density, attack surface complexity, and ISO/IEC 25010 fault resilience.</p>
+        </div>
       </div>
 
-      <!-- COMPOSITE API HEALTH SCORECARD -->
+      <!-- COMPOSITE HEALTH SCORECARD BANNER -->
       <div class="health-banner">
         <div class="health-left">
           <div class="health-badge grade-a" id="healthBadge">—</div>
           <div>
-            <h3 class="health-title" id="healthScoreVal">Security & Reliability Score: —</h3>
+            <h3 class="health-title" id="healthScoreVal">Security & Quality Score: —</h3>
             <p class="health-desc" id="healthScoreDesc">Run a scan to calculate overall API composite health score.</p>
           </div>
         </div>
         <div class="health-stats">
           <div class="health-stat-item">
-            <small>Fault Handling</small>
+            <small>Fault Handling (ERR)</small>
             <strong id="kpiResilienceTop">—</strong>
           </div>
           <div class="health-stat-item">
-            <small>Schema Match</small>
+            <small>Schema Match (SCR)</small>
             <strong id="kpiSchemaConfTop">—</strong>
           </div>
         </div>
@@ -393,9 +441,8 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
         </div>
       </div>
 
-      <!-- CHARTS GRID (PIE/DONUT, BARS, STATUS CODES, METHODS) -->
+      <!-- 4 VISUAL CHARTS -->
       <div class="charts-grid">
-        <!-- CHART 1: SEVERITY BREAKDOWN DONUT -->
         <div class="chart-card">
           <h3>Defect Severity Distribution (Pie / Donut)</h3>
           <p>Breakdown of critical, high, medium, and low findings</p>
@@ -404,7 +451,6 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
           </div>
         </div>
 
-        <!-- CHART 2: VULNERABILITY CLASSIFICATION HORIZONTAL BARS -->
         <div class="chart-card">
           <h3>Vulnerability Classification Frequency</h3>
           <p>Distribution by attack category (SQLi, XSS, Bypass, etc.)</p>
@@ -413,7 +459,6 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
           </div>
         </div>
 
-        <!-- CHART 3: HTTP RESPONSE STATUS CODE DISTRIBUTION -->
         <div class="chart-card">
           <h3>HTTP Response Status Distribution</h3>
           <p>Response codes observed during fuzz testing (2xx, 4xx, 5xx)</p>
@@ -422,7 +467,6 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
           </div>
         </div>
 
-        <!-- CHART 4: API METHOD & RISK PROFILE -->
         <div class="chart-card">
           <h3>API Attack Surface: Methods & Inherent Risk</h3>
           <p>Endpoint HTTP methods and heuristic risk tier distribution</p>
@@ -432,8 +476,8 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
         </div>
       </div>
 
-      <!-- METRIC MATHEMATICAL FOUNDATIONS & DEFINITIONS -->
-      <div class="panel" style="margin-top:10px">
+      <!-- FORMAL SOFTWARE METRICS TABLE -->
+      <div class="panel">
         <div class="panelhead">
           <div><h2>Formal Software Metrics Definitions</h2><small>Mathematical formulation & quality assurance standards</small></div>
           <span class="tag">ISO/IEC 25010</span>
@@ -498,18 +542,149 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
       </div>
     </section>
 
-    <!-- SECTION: SCAN HISTORY -->
-    <section class="panel history" id="history">
-      <div class="panelhead">
-        <div><h2>Recent scans</h2><small>Results from this browser session. Reports are retained in server memory.</small></div>
-        <span class="tag">SESSION</span>
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 3: FINDINGS EXPLORER         -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-findings" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">AUDIT & VULNERABILITY EVIDENCE</p>
+          <h1>Scan findings</h1>
+          <p class="subtitle">Filter, search, and examine security flaws, contract mismatches, and attack payloads.</p>
+        </div>
       </div>
-      <div id="historyList" style="padding:12px 18px;color:#8a96a9;font-size:12px">Your completed scans will appear here.</div>
+
+      <div class="panel" id="findingsPanel">
+        <div class="summary"><b id="resultTitle">Your results will appear here</b><span id="duration">—</span></div>
+        <div class="toolbar">
+          <input class="input" id="search" type="search" placeholder="Search findings, routes, or payloads…" aria-label="Search findings">
+          <select class="input" id="severity" aria-label="Filter severity">
+            <option value="all">All severities</option>
+            <option>critical</option>
+            <option>high</option>
+            <option>medium</option>
+            <option>low</option>
+          </select>
+        </div>
+        <div class="empty" id="empty">
+          <div class="emptyicon">⌕</div>
+          <b>No findings recorded yet.</b>
+          <p>Run a security scan on the dashboard to test your endpoints and populate findings.</p>
+        </div>
+        <div class="tablewrap" id="tablewrap" hidden>
+          <table>
+            <thead>
+              <tr>
+                <th>SEVERITY</th>
+                <th>FINDING / ENDPOINT</th>
+                <th>RESPONSE</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="reportbar">
+          <span id="shown">No results yet</span>
+          <div class="downloads" id="downloads" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 4: ATTACK SURFACE & SPECS    -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-surface" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">STRUCTURAL API CATALOG</p>
+          <h1>API Attack Surface & Specs</h1>
+          <p class="subtitle">Complete inventory of parsed OpenAPI operations, parameter surfaces, and heuristic risk rankings.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelhead">
+          <div><h2>Parsed Endpoints Inventory</h2><small>All operations discovered in OpenAPI specification</small></div>
+          <span class="tag">SPEC CATALOG</span>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>METHOD</th>
+                <th>ROUTE PATH</th>
+                <th>PARAMETERS / BODY</th>
+                <th>AUTH REQ</th>
+                <th>RISK SCORE</th>
+                <th>DEFECTS</th>
+              </tr>
+            </thead>
+            <tbody id="surfaceRows">
+              <tr>
+                <td colspan="6" style="text-align:center;padding:40px;color:#94a3b8">Run a scan to inspect the API endpoint inventory.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 5: SCAN HISTORY              -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-history" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">AUDIT LOG & PAST SCANS</p>
+          <h1>Scan History</h1>
+          <p class="subtitle">Past scans from this browser session. Reports and evidence are preserved in server memory.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelhead">
+          <div><h2>Session Audit History</h2><small>Up to 20 past executions retained</small></div>
+          <span class="tag">AUDIT LOG</span>
+        </div>
+        <div id="historyList">
+          <div style="padding:40px;text-align:center;color:#94a3b8">Your completed scans will appear here.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SUB-WORKSPACE 6: FRAMEWORK GUIDE           -->
+    <!-- ========================================== -->
+    <section class="sub-workspace" id="view-guide" style="display:none">
+      <div class="heading">
+        <div>
+          <p class="eyebrow">DOCUMENTATION & ARCHITECTURE</p>
+          <h1>Framework Guide</h1>
+          <p class="subtitle">Technical guide to automated fuzz testing, classification heuristics, and quality metrics.</p>
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <h3>1. OpenAPI / Swagger Parsing & Reference Resolution</h3>
+        <p>SentinelAPI ingests OpenAPI 3.x and Swagger 2.0 specifications. It traverses JSON/YAML schemas, recursively resolves all internal <code>$ref</code> dependencies, and maps each operation's path, query, header, and body constraints.</p>
+      </div>
+      <div class="guide-card">
+        <h3>2. Fuzz-Risk Scoring Heuristic</h3>
+        <p>Endpoints are prioritized based on structural risk factors: mutating HTTP methods (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>), dynamic request bodies, complex path/query parameters, and lack of authentication barriers.</p>
+      </div>
+      <div class="guide-card">
+        <h3>3. Hostile Payload Generation</h3>
+        <p>The input synthesizer generates boundary values (integer overflow, negative bounds, max lengths), type confusion (arrays/objects in primitive slots), SQL Injection indicators, XSS script injection strings, and path traversal strings.</p>
+      </div>
+      <div class="guide-card">
+        <h3>4. Independent Anonymous Probes</h3>
+        <p>Secured endpoints automatically receive an independent unauthenticated probe without credentials. A 2xx response triggers an immediate <code>AUTH_NOT_ENFORCED</code> finding.</p>
+      </div>
     </section>
 
     <footer>
-      <span>SentinelAPI · Automated API Security Testing</span>
-      <span>Enterprise API Fuzzer & Contract Assurance</span>
+      <span>SentinelAPI · Enterprise API Security Fuzzer & Contract Assurance</span>
+      <span>Automated Quality & Robustness Testing</span>
     </footer>
   </div>
 </main>
@@ -517,6 +692,41 @@ footer{display:flex;justify-content:space-between;margin-top:26px;color:#94a3b8;
 <script>
 const $ = id => document.getElementById(id);
 let mode = 'demo', specText = '', current = null, history = [];
+
+/* SUB-WORKSPACE TAB SWITCHING */
+function switchWorkspace(targetId) {
+  document.querySelectorAll('nav a.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.target === targetId);
+  });
+  document.querySelectorAll('.sub-workspace').forEach(view => {
+    view.style.display = view.id === 'view-' + targetId ? 'block' : 'none';
+  });
+  const titles = {
+    dashboard: 'Scan Dashboard',
+    metrics: 'Metrics & Analytics',
+    findings: 'Findings Explorer',
+    surface: 'API Attack Surface & Specs',
+    history: 'Scan History',
+    guide: 'Framework Guide'
+  };
+  $('breadcrumbNav').textContent = '/   ' + (titles[targetId] || 'Workspace');
+  window.location.hash = targetId;
+}
+
+document.querySelectorAll('nav a.nav-item').forEach(item => {
+  item.onclick = (e) => {
+    e.preventDefault();
+    switchWorkspace(item.dataset.target);
+  };
+});
+
+// Handle direct hash navigation
+if (window.location.hash) {
+  const hash = window.location.hash.replace('#', '');
+  if (['dashboard', 'metrics', 'findings', 'surface', 'history', 'guide'].includes(hash)) {
+    switchWorkspace(hash);
+  }
+}
 
 function setMode(value) {
   mode = value;
@@ -588,6 +798,25 @@ function render() {
   $('shown').textContent = visible.length + ' of ' + current.findings.length + ' findings';
 }
 
+function renderSurface(data) {
+  const catalog = data.catalog || [];
+  const tbody = $('surfaceRows');
+  if (!tbody || !catalog.length) return;
+  tbody.replaceChildren();
+  for (const item of catalog) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="method-badge method-${item.method.toLowerCase()}">${item.method}</span></td>
+      <td><code>${item.path}</code></td>
+      <td>${item.params_count} params ${item.has_body ? '+ JSON Body' : ''}</td>
+      <td>${item.secured ? '<span class="pill low">Auth Required</span>' : '<span class="pill medium">Public / Anon</span>'}</td>
+      <td><b>${item.risk_score}</b> / 10</td>
+      <td>${item.findings_count > 0 ? '<span class="pill critical">'+item.findings_count+' defects</span>' : '<span class="pill" style="background:#ecfdf5;color:#059669">0 defects</span>'}</td>
+    `;
+    tbody.append(tr);
+  }
+}
+
 /* RENDER SOFTWARE METRICS & VISUALIZATIONS */
 function renderMetrics(data) {
   const m = data.metrics || {};
@@ -610,12 +839,14 @@ function renderMetrics(data) {
     $('healthScoreVal').textContent = 'Security & Quality Score: ' + hs + ' / 100 (Grade ' + grade + ')';
     $('healthScoreDesc').textContent = gradeLabel + ' · Evaluated against defect severity penalty, error robustness, and spec fidelity.';
   }
+  if ($('quickHealthVal')) $('quickHealthVal').textContent = hs + ' / 100 (' + grade + ')';
   if ($('kpiResilienceTop')) $('kpiResilienceTop').textContent = (m.error_resilience_ratio !== undefined ? m.error_resilience_ratio : '100') + '%';
   if ($('kpiSchemaConfTop')) $('kpiSchemaConfTop').textContent = (m.schema_conformance_rate !== undefined ? m.schema_conformance_rate : '100') + '%';
 
   // Update Tier 1 KPI Cards
   const dd = m.defect_density !== undefined ? m.defect_density : (totalFindings / fuzzed).toFixed(2);
   $('kpiDefectDensity').textContent = dd + ' issues/ep';
+  if ($('quickDefectDensity')) $('quickDefectDensity').textContent = dd + ' issues/ep';
   const dsi = m.defect_severity_index !== undefined ? m.defect_severity_index : 
     (totalFindings ? ((sevs.critical*4 + sevs.high*3 + sevs.medium*2 + sevs.low*1)/totalFindings).toFixed(2) : '0.00');
   $('kpiDsi').textContent = dsi + ' / 4.0';
@@ -644,6 +875,9 @@ function renderMetrics(data) {
 
   // 4. API METHODS & RISK MATRIX
   renderMethodsAndRisk(m.methods || {}, m.risk_breakdown || {});
+
+  // 5. ATTACK SURFACE CATALOG
+  renderSurface(data);
 }
 
 function countField(list, field) {
@@ -801,15 +1035,25 @@ function show(data) {
   $('duration').textContent = data.elapsed + ' seconds';
   $('scanState').textContent = data.truncated ? 'PARTIAL' : 'COMPLETE';
   
-  $('downloads').replaceChildren();
-  for (const format of ['html', 'md', 'json', 'sarif']) {
-    const a = document.createElement('a');
-    a.href = '/api/reports/' + data.id + '/' + format;
-    a.textContent = format.toUpperCase();
-    a.download = '';
-    $('downloads').append(a);
+  // Dashboard Quick Overview Card
+  $('quickScanPlaceholder').hidden = true;
+  $('quickScanResults').hidden = false;
+  $('quickResultTitle').textContent = (data.mode === 'demo' ? 'Demo API' : 'Custom API') + ' Scan';
+  $('quickDuration').textContent = data.elapsed + 's elapsed · ' + data.requests + ' requests';
+
+  // Populate download bars on both Dashboard and Findings views
+  for (const targetBar of [$('downloads'), $('dashboardDownloads')]) {
+    if (!targetBar) continue;
+    targetBar.replaceChildren();
+    for (const format of ['html', 'md', 'json', 'sarif']) {
+      const a = document.createElement('a');
+      a.href = '/api/reports/' + data.id + '/' + format;
+      a.textContent = format.toUpperCase();
+      a.download = '';
+      targetBar.append(a);
+    }
+    targetBar.hidden = false;
   }
-  $('downloads').hidden = false;
 
   render();
   renderMetrics(data);
@@ -848,17 +1092,29 @@ $('scanForm').onsubmit = async event => {
     show(data);
     history.unshift({ ...data, created: new Date().toLocaleTimeString() });
     history = history.slice(0, 20);
+
+    // Update History Workspace List
     $('historyList').replaceChildren();
     for (const item of history) {
-      const b = document.createElement('button');
-      b.textContent = (item.mode === 'demo' ? 'Demo API' : 'Your API') + ' · ' + item.findings.length + ' findings · ' + item.requests + ' requests · ' + item.created;
-      b.onclick = () => {
+      const div = document.createElement('div');
+      div.className = 'history-item';
+      div.innerHTML = `
+        <div>
+          <b>${item.mode === 'demo' ? 'Demo API' : 'Custom API'}</b>
+          <small style="display:block;color:#64748b">${item.created} · ${item.requests} requests · ${item.elapsed}s</small>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="pill ${item.findings.length ? 'critical' : 'low'}">${item.findings.length} findings</span>
+          <button class="outline" style="padding:5px 10px;font-size:11px">Inspect</button>
+        </div>
+      `;
+      div.querySelector('button').onclick = () => {
         show(item);
-        $('findings').scrollIntoView({ behavior: 'smooth' });
+        switchWorkspace('metrics');
       };
-      $('historyList').append(b);
+      $('historyList').append(div);
     }
-    $('status').textContent = data.truncated ? 'Scan finished with partial results: request limit reached.' : 'Scan complete. Review metrics charts and download reports.';
+    $('status').textContent = data.truncated ? 'Scan finished with partial results: request limit reached.' : 'Scan complete. Check the other sub-workspaces for metrics and findings.';
   } catch (error) {
     $('status').textContent = error.message;
     $('status').classList.add('error');
