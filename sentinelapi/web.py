@@ -93,9 +93,52 @@ async def scan(options: Scan):
             'json': to_json(findings, cov), 'sarif': to_sarif(findings, 'uploaded-spec', __version__)}
         while len(reports) > 20:
             reports.popitem(last=False)
+
+        from collections import Counter
+        from .risk import fuzz_risk_score
+
+        severities = Counter(f.severity for f in findings)
+        weights = {"critical": 4, "high": 3, "medium": 2, "low": 1}
+        dsi = round(sum(severities[s] * weights.get(s, 1) for s in severities) / max(len(findings), 1), 2) if findings else 0.0
+        vulnerable_eps = len({f.endpoint for f in findings})
+        fuzzed_count = max(cov['endpoints_fuzzed'], 1)
+        defect_density = round(len(findings) / fuzzed_count, 2)
+        vulnerable_pct = round(100 * vulnerable_eps / fuzzed_count, 1)
+
+        type_counts = dict(Counter(f.kind for f in findings).most_common())
+        method_counts = dict(Counter(ep.method.upper() for ep in eps))
+        risk_scores = [fuzz_risk_score(ep) for ep in eps]
+        risk_breakdown = {
+            "High": sum(1 for r in risk_scores if r >= 6),
+            "Medium": sum(1 for r in risk_scores if 3 <= r < 6),
+            "Low": sum(1 for r in risk_scores if r < 3),
+        }
+
+        status_counts = Counter()
+        for f in findings:
+            if f.status:
+                status_counts[str(f.status)] += 1
+        for codes in fz.observed.values():
+            for c in codes:
+                status_counts[str(c)] = max(status_counts[str(c)], 1)
+
+        metrics = {
+            "defect_density": defect_density,
+            "defect_severity_index": dsi,
+            "vulnerable_endpoints_pct": vulnerable_pct,
+            "vulnerable_endpoints_count": vulnerable_eps,
+            "throughput_rps": round(fz.requests / max(fz.elapsed, 0.001), 1),
+            "avg_latency_ms": round((fz.elapsed / max(fz.requests, 1)) * 1000, 1),
+            "severities": {s: severities.get(s, 0) for s in ("critical", "high", "medium", "low")},
+            "vulnerability_types": type_counts,
+            "methods": method_counts,
+            "risk_breakdown": risk_breakdown,
+            "status_codes": dict(status_counts.most_common(8))
+        }
+
         return {'id': scan_id, 'findings': [f.to_dict() for f in findings],
             'coverage': cov, 'requests': fz.requests, 'elapsed': round(fz.elapsed, 2),
-            'truncated': fz.truncated, 'mode': options.mode}
+            'truncated': fz.truncated, 'mode': options.mode, 'metrics': metrics}
 
 
 @app.get('/api/reports/{scan_id}/{format}')
